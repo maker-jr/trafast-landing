@@ -1,4 +1,3 @@
-/* eslint-disable react-refresh/only-export-components */
 import MarketingLayout from "./marketing.layout";
 import { Suspense, lazy } from "react";
 import type { RouteType } from "@/router/router.types";

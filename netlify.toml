@@ -1,0 +1,14 @@
+[build]
+  command = "yarn build"
+  publish = "dist"
+
+[build.environment]
+  NODE_VERSION = "22"
+
+# Single-page app fallback. Netlify resolves function routes (declared via
+# `config.path` in netlify/functions/*) before redirects, so /api/waitlist is
+# not swallowed by this rule.
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
