@@ -335,34 +335,101 @@ export function useSmoothWheel() {
 
     let target = window.scrollY;
     let running = false;
+    let frame = 0;
+    /** The offset we last asked for, so we can tell our scrolls from theirs. */
+    let expected = -1;
+    let stalledFrames = 0;
+    let pointerHeld = false;
 
     const maxTop = () =>
       document.documentElement.scrollHeight - window.innerHeight;
 
+    const stop = () => {
+      running = false;
+      expected = -1;
+      stalledFrames = 0;
+      if (frame) {
+        cancelAnimationFrame(frame);
+        frame = 0;
+      }
+    };
+
     const tick = () => {
+      frame = 0;
       const cur = window.scrollY;
-      if (Math.abs(target - cur) < 0.5) {
-        running = false;
-        window.scrollTo(0, target);
+
+      // Something else moved the page — a scrollbar drag, a key press, an
+      // anchor jump. Yield to it rather than hauling the page back.
+      if (expected >= 0 && Math.abs(cur - expected) > 4) {
+        stop();
         return;
       }
-      window.scrollTo(0, cur + (target - cur) * 0.12);
-      requestAnimationFrame(tick);
+
+      // The page grows and shrinks as sticky sections come and go.
+      target = Math.max(0, Math.min(maxTop(), target));
+      const diff = target - cur;
+
+      if (Math.abs(diff) <= 1) {
+        stop();
+        return;
+      }
+
+      // Always move at least a whole pixel. An eased step alone rounds to no
+      // movement over the last few pixels, which leaves the loop spinning
+      // forever and pinning the page against every other kind of scrolling.
+      const eased = diff * 0.12;
+      window.scrollTo(0, cur + (Math.abs(eased) < 1 ? Math.sign(diff) : eased));
+
+      // If the page refused to move at all, give up rather than spin.
+      stalledFrames = window.scrollY === cur ? stalledFrames + 1 : 0;
+      if (stalledFrames > 3) {
+        stop();
+        return;
+      }
+
+      expected = window.scrollY;
+      frame = requestAnimationFrame(tick);
     };
 
     const onWheel = (e: WheelEvent) => {
-      if (e.ctrlKey || Math.abs(e.deltaX) > Math.abs(e.deltaY)) return;
+      // While a pointer is held the user may be dragging the scrollbar, so
+      // leave scrolling entirely to the browser.
+      if (pointerHeld || e.ctrlKey || Math.abs(e.deltaX) > Math.abs(e.deltaY)) {
+        return;
+      }
       e.preventDefault();
       if (!running) target = window.scrollY;
       const d = e.deltaMode === 1 ? e.deltaY * 16 : e.deltaY;
       target = Math.max(0, Math.min(maxTop(), target + d * SCROLL_SPEED));
       if (!running) {
         running = true;
-        requestAnimationFrame(tick);
+        expected = -1;
+        stalledFrames = 0;
+        frame = requestAnimationFrame(tick);
       }
     };
 
+    const onPointerDown = () => {
+      pointerHeld = true;
+      stop();
+    };
+    const onPointerRelease = () => {
+      pointerHeld = false;
+    };
+
     window.addEventListener("wheel", onWheel, { passive: false });
-    return () => window.removeEventListener("wheel", onWheel);
+    window.addEventListener("pointerdown", onPointerDown, true);
+    window.addEventListener("pointerup", onPointerRelease, true);
+    window.addEventListener("pointercancel", onPointerRelease, true);
+    window.addEventListener("blur", onPointerRelease);
+
+    return () => {
+      window.removeEventListener("wheel", onWheel);
+      window.removeEventListener("pointerdown", onPointerDown, true);
+      window.removeEventListener("pointerup", onPointerRelease, true);
+      window.removeEventListener("pointercancel", onPointerRelease, true);
+      window.removeEventListener("blur", onPointerRelease);
+      stop();
+    };
   }, []);
 }
