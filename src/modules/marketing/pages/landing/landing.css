@@ -113,6 +113,12 @@
   .tf-landing [data-m="point"] > div { order: 0 !important; justify-self: stretch !important; max-width: none !important; }
   .tf-landing [data-m="point"] > div:first-child { height: 400px !important; }
   .tf-landing [data-m="fan"] { grid-template-columns: minmax(0, 1fr) !important; }
+  .tf-landing [data-story] { height: auto !important; }
+  .tf-landing [data-seqstory] { height: 260vh !important; }
+  .tf-landing [data-seq] { left: 20px !important; right: 20px !important; }
+  .tf-landing [data-stage] { position: static !important; height: auto !important; overflow: visible !important; padding: 96px 20px 80px !important; gap: 40px !important; }
+  .tf-landing [data-advwrap] { position: static !important; display: flex; flex-direction: column; gap: 12px; pointer-events: auto !important; }
+  .tf-landing [data-adv] { position: static !important; transform: none !important; opacity: 1 !important; max-width: none !important; font-size: 19px !important; }
   .tf-landing [data-m="fan"] [data-fan] { height: 560px !important; }
   .tf-landing [data-m="foot"] { grid-template-columns: minmax(0, 1fr) !important; padding: 36px 24px !important; gap: 40px !important; border-radius: 36px !important; }
   .tf-landing [data-m="panel"] { padding: 28px 24px !important; }

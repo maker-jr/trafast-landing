@@ -10,6 +10,52 @@ export default function HowItWorks({ beat, phone }: Props) {
   return (
     <section id="how-it-works" style={{ background: "#FBF8F2", color: "#2A211B" }}>
       <div
+        style={{
+          minHeight: "100vh",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          justifyContent: "center",
+          textAlign: "center",
+          gap: 28,
+          padding: "120px 40px",
+          boxSizing: "border-box",
+        }}
+      >
+        <div
+          data-zoom=""
+          style={{
+            fontSize: "clamp(64px, 10vw, 168px)",
+            lineHeight: 0.92,
+            letterSpacing: "-0.05em",
+            fontWeight: 900,
+            textWrap: "balance",
+            maxWidth: 1100,
+            transformOrigin: "50% 60%",
+            willChange: "transform, opacity",
+          }}
+        >
+          Here’s how it works.
+        </div>
+        <div
+          data-reveal=""
+          style={{
+            fontSize: "clamp(20px, 1.9vw, 28px)",
+            lineHeight: 1.4,
+            fontWeight: 600,
+            color: "#6E6459",
+            maxWidth: 640,
+            textWrap: "balance",
+            opacity: 0,
+            transform: "translateY(40px)",
+            transition:
+              "opacity 0.9s 0.2s cubic-bezier(0.22,1,0.36,1), transform 0.9s 0.2s cubic-bezier(0.22,1,0.36,1)",
+          }}
+        >
+          Five steps. You only ever notice one of them.
+        </div>
+      </div>
+      <div
         data-howgrid=""
         data-m="how"
         style={{

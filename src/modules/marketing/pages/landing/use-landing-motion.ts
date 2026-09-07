@@ -36,6 +36,113 @@ export function scrollToSignup() {
   }, 700);
 }
 
+const clamp01 = (n: number) => Math.min(1, Math.max(0, n));
+const ease = (n: number) => 1 - Math.pow(1 - n, 3);
+
+/**
+ * The "Your bank app. Only better." story. Three cards fan in, then the two
+ * bank-app cards slide away while the offline card takes the stage and the
+ * advantage bubbles fan out around it.
+ */
+function driveStory(
+  story: HTMLElement,
+  fanwrap: HTMLElement,
+  r: DOMRect,
+  vh: number
+) {
+  const cards = fanwrap.querySelectorAll<HTMLElement>("[data-fan]");
+  const head = story.querySelector<HTMLElement>("[data-storyhead]");
+  const line = story.querySelector<HTMLElement>("[data-storyline]");
+  const advantages = story.querySelectorAll<HTMLElement>("[data-adv]");
+
+  // Below 820px the stage is a plain stacked column, so leave it all alone.
+  if (window.innerWidth <= 820) {
+    cards.forEach((el) => {
+      el.style.transform = "";
+      el.style.opacity = "";
+    });
+    for (const el of [head, line]) {
+      if (el) {
+        el.style.opacity = "";
+        el.style.transform = "";
+      }
+    }
+    return;
+  }
+
+  const sr = story.getBoundingClientRect();
+  const p = clamp01(-sr.top / (sr.height - vh));
+  const seg = (a: number, b: number) => clamp01((p - a) / (b - a));
+
+  const fanned = ease(seg(0.02, 0.2));
+  const held = ease(seg(0.26, 0.46));
+
+  const stage = story.querySelector<HTMLElement>("[data-stage]");
+  if (!stage) return;
+  const st = stage.getBoundingClientRect();
+
+  const w = (r.width - 40) / 3;
+  const cardCx = r.left + 2 * (w + 20) + w / 2;
+  const cardCy = r.top + r.height / 2;
+  const dx = st.left + st.width / 2 - cardCx;
+  const dy = st.top + st.height / 2 - cardCy;
+
+  cards.forEach((el, i) => {
+    const off = (1 - i) * (w + 20) * (1 - fanned);
+    const rot = (i - 1) * 6 * (1 - fanned);
+    const lift = 120 * (1 - fanned) + i * 24 * (1 - fanned);
+
+    let tx = off;
+    let ty = lift;
+    let scale = 0.92 + 0.08 * fanned;
+    let opacity = 0.4 + 0.6 * fanned;
+
+    if (i === 2) {
+      tx += dx * held;
+      ty += dy * held;
+      scale += 0.06 * held;
+    } else {
+      tx -= (w * 0.9 + 60) * held * (i === 0 ? 1.4 : 1);
+      opacity *= 1 - held;
+    }
+
+    el.style.transform = `translate(${tx}px, ${ty}px) rotate(${rot}deg) scale(${scale})`;
+    el.style.zIndex = String(i === 2 ? 4 : i === 1 ? 3 : 2);
+    el.style.opacity = String(opacity);
+  });
+
+  if (head) {
+    head.style.opacity = String(Math.min(1 - held, 1));
+    head.style.transform = `translateY(${-40 * held}px)`;
+  }
+  if (line) {
+    line.style.opacity = String(Math.min(fanned, 1 - held));
+    line.style.transform = `translateY(${30 * (1 - fanned) + 40 * held}px)`;
+  }
+
+  // Park the bubbles in whichever gutter the held card leaves free.
+  const cardHalf = (w * 1.06) / 2;
+  const gutter = 20;
+  const sideWidth = Math.max(160, st.width / 2 - cardHalf - gutter - 24);
+
+  advantages.forEach((el, i) => {
+    const a = ease(seg(0.5 + i * 0.09, 0.58 + i * 0.09));
+    const onLeft = el.hasAttribute("data-left");
+
+    el.style.maxWidth = `${Math.min(Number(el.dataset.maxw ?? 340), sideWidth)}px`;
+    if (onLeft) {
+      el.style.left = "auto";
+      el.style.right = `calc(50% + ${cardHalf + gutter}px)`;
+    } else {
+      el.style.right = "auto";
+      el.style.left = `calc(50% + ${cardHalf + gutter}px)`;
+    }
+
+    el.style.opacity = String(a);
+    el.style.transform = `translateY(${30 * (1 - a)}px) scale(${0.7 + 0.3 * a}) rotate(${el.dataset.rot ?? "0deg"})`;
+  });
+}
+
 /**
  * Drives every scroll-linked effect on the page: hero fragments drifting off,
  * the sticky phone's scale, which walkthrough beat is active, the fanning
@@ -98,8 +205,47 @@ export function useLandingMotion(onBeatChange: (beat: number) => void) {
           );
         });
 
+        // "Wait! / How does that even work? / Glad you asked." — each line owns
+        // an equal slice of the scroll, and the last one stays up.
+        document.querySelectorAll<HTMLElement>("[data-seqstory]").forEach((story) => {
+          const sr = story.getBoundingClientRect();
+          const p = Math.min(1, Math.max(0, -sr.top / (sr.height - vh)));
+          const lines = story.querySelectorAll<HTMLElement>("[data-seq]");
+          const slot = 1 / lines.length;
+
+          lines.forEach((el, i) => {
+            const local = (p - i * slot) / slot;
+            let opacity: number;
+            let y: number;
+            let scale: number;
+
+            if (i === lines.length - 1) {
+              const inT = clamp01(local / 0.45);
+              opacity = ease(inT);
+              y = 40 * (1 - opacity);
+              scale = 0.9 + 0.1 * opacity;
+            } else {
+              const ei = ease(clamp01(local / 0.35));
+              const eo = ease(clamp01((local - 0.65) / 0.35));
+              opacity = ei * (1 - eo);
+              y = 40 * (1 - ei) - 40 * eo;
+              scale = 0.9 + 0.1 * ei + 0.06 * eo;
+            }
+
+            el.style.opacity = String(opacity);
+            el.style.transform = `translateY(calc(-50% + ${y}px)) scale(${scale})`;
+          });
+        });
+
         document.querySelectorAll<HTMLElement>("[data-fanwrap]").forEach((fw) => {
           const r = fw.getBoundingClientRect();
+
+          const story = fw.closest<HTMLElement>("[data-story]");
+          if (story) {
+            driveStory(story, fw, r, vh);
+            return;
+          }
+
           const t = Math.min(1, Math.max(0, (vh * 0.95 - r.top) / (vh * 0.7)));
           const e = 1 - Math.pow(1 - t, 3);
           const mobile = window.innerWidth <= 820;

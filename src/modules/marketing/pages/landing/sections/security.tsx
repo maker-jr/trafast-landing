@@ -86,313 +86,113 @@ function Point({
   );
 }
 
-const CHECK_ROW_DELAYS = [
-  { label: "Device", delay: "1s" },
-  { label: "Identity", delay: "1.9s" },
-  { label: "Reserve", delay: "2.8s" },
-];
-
-function ReadinessArt() {
-  return (
-    <div
-      style={{
-        position: "relative",
-        width: 210,
-        height: 320,
-        marginTop: 60,
-        borderRadius: "34px 34px 0 0",
-        padding: "8px 8px 0",
-        boxSizing: "border-box",
-        background: "linear-gradient(150deg, #6E6A64, #2C2A28 32%, #1A1918 68%, #55514B)",
-        boxShadow: "0 30px 60px rgba(42,33,27,0.18)",
-        overflow: "hidden",
-      }}
-    >
+/** The same receipt, on both phones, at the same second. */
+function TwoPhonesArt() {
+  const receipt = (
+    label: string,
+    state: string,
+    stateColor: string,
+    rotate: string
+  ) => (
+    <div style={{ transform: `rotate(${rotate})` }}>
       <div
         style={{
-          position: "relative",
-          width: "100%",
-          height: "100%",
-          borderRadius: "27px 27px 0 0",
-          background: "#FFFFFF",
-          overflow: "hidden",
-          padding: "44px 12px 0",
+          width: 158,
           boxSizing: "border-box",
+          padding: "16px 16px 14px",
+          borderRadius: 22,
+          background: "#FFFFFF",
+          border: "1px solid #EFE8DB",
+          boxShadow: "0 24px 60px rgba(42,33,27,0.12)",
           display: "flex",
           flexDirection: "column",
-          gap: 8,
+          gap: 10,
         }}
       >
-        <div
-          style={{
-            position: "absolute",
-            top: 8,
-            left: "50%",
-            transform: "translateX(-50%)",
-            width: 60,
-            height: 18,
-            borderRadius: 10,
-            background: "#0A0A0A",
-          }}
-        />
-        <div style={{ fontSize: 12, fontWeight: 700, color: "#8C8177", padding: "0 6px 4px" }}>
-          Checking this phone again
-        </div>
-
-        {CHECK_ROW_DELAYS.map(({ label, delay }) => (
-          <div
-            key={label}
+        <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+          <span style={{ fontSize: 12, fontWeight: 700, color: "#8C8177" }}>{label}</span>
+          <span
             style={{
+              width: 20,
+              height: 20,
+              borderRadius: 10,
+              background: "#1F6B4A",
               display: "flex",
               alignItems: "center",
-              justifyContent: "space-between",
-              padding: "14px 16px",
-              borderRadius: 16,
-              background: "#F6F1E8",
+              justifyContent: "center",
             }}
           >
-            <span style={{ fontSize: 13.5, fontWeight: 700, color: "#2A211B" }}>{label}</span>
-            <span style={{ position: "relative", width: 22, height: 22, display: "block" }}>
-              <span
-                style={{
-                  position: "absolute",
-                  inset: 0,
-                  borderRadius: 11,
-                  border: "2px solid #E2D9C9",
-                  boxSizing: "border-box",
-                  display: "block",
-                }}
-              />
-              <span
-                style={{
-                  position: "absolute",
-                  inset: 0,
-                  borderRadius: 11,
-                  background: "#1F6B4A",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  animation: `tf-checkIn 6s ${delay} cubic-bezier(0.22,1,0.36,1) infinite`,
-                }}
-              >
-                <svg
-                  width="12"
-                  height="12"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="#FBF8F2"
-                  strokeWidth="3.2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                >
-                  <path d="m5 13 4.5 4.5L19 7" />
-                </svg>
-              </span>
-            </span>
-          </div>
-        ))}
-
+            <svg
+              width="11"
+              height="11"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="#FBF8F2"
+              strokeWidth="3.2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
+              <path d="m5 13 4.5 4.5L19 7" />
+            </svg>
+          </span>
+        </div>
+        <div style={{ fontSize: 13, fontWeight: 700, color: stateColor }}>{state}</div>
         <div
           style={{
-            marginTop: 6,
-            height: 44,
-            borderRadius: 999,
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            gap: 8,
-            fontSize: 13,
-            fontWeight: 700,
-            color: "#FBF8F2",
-            background: "#1F6B4A",
-            animation: "tf-checkIn 6s 3.7s cubic-bezier(0.22,1,0.36,1) infinite",
+            fontSize: 30,
+            fontWeight: 900,
+            letterSpacing: "-1.5px",
+            lineHeight: 1,
+            fontVariantNumeric: "tabular-nums",
           }}
         >
-          <span
-            style={{ width: 7, height: 7, borderRadius: 4, background: "#FBF8F2", display: "block" }}
-          />
-          Cleared to pay offline
+          ₦4,500
         </div>
-        <span
-          style={{
-            position: "absolute",
-            left: 0,
-            right: 0,
-            height: 90,
-            background:
-              "linear-gradient(rgba(31,107,74,0), rgba(31,107,74,0.16) 70%, rgba(31,107,74,0.55))",
-            pointerEvents: "none",
-            animation: "tf-scan 6s cubic-bezier(0.45,0,0.55,1) infinite",
-            display: "block",
-          }}
-        />
+        <div style={{ fontSize: 11.5, fontWeight: 600, color: "#8C8177" }}>9:41:07 · Final</div>
       </div>
     </div>
   );
-}
 
-function ReserveArt() {
   return (
     <div
       style={{
         position: "relative",
         display: "flex",
         alignItems: "center",
-        gap: 36,
+        justifyContent: "center",
+        gap: 18,
         width: 406,
         flex: "none",
         transform: "scale(var(--fit, 1))",
       }}
     >
-      <div
+      {receipt("Your phone", "Sent", "#2A211B", "-4deg")}
+      <span
         style={{
-          position: "relative",
-          width: 250,
-          padding: "22px 24px 20px",
-          borderRadius: 28,
-          background: "#FFFFFF",
-          border: "1px solid #EFE8DB",
-          boxShadow: "0 24px 60px rgba(42,33,27,0.10)",
+          width: 44,
+          height: 44,
+          borderRadius: 22,
+          background: "#2A211B",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          flex: "none",
         }}
       >
-        <div style={{ fontSize: 12.5, fontWeight: 700, color: "#8C8177" }}>Your balance</div>
-        <div
-          style={{
-            display: "flex",
-            alignItems: "flex-end",
-            gap: 2,
-            letterSpacing: "-2px",
-            lineHeight: 1,
-            fontVariantNumeric: "tabular-nums",
-            marginTop: 8,
-          }}
+        <svg
+          width="20"
+          height="20"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="#FBF8F2"
+          strokeWidth="2.4"
+          strokeLinecap="round"
+          strokeLinejoin="round"
         >
-          <span
-            style={{
-              fontSize: 20,
-              fontWeight: 700,
-              color: "#8C8177",
-              letterSpacing: "-0.5px",
-              paddingBottom: 5,
-            }}
-          >
-            ₦
-          </span>
-          <span style={{ fontSize: 40, fontWeight: 900 }}>4,964,544</span>
-        </div>
-        <div style={{ display: "flex", gap: 4, height: 10, marginTop: 18 }}>
-          <span style={{ flex: 1, borderRadius: 5, background: "#2A211B", display: "block" }} />
-          <span
-            style={{
-              width: 34,
-              borderRadius: 5,
-              display: "block",
-              background: "#E2D9C9",
-              animation: "tf-sliceGhost 6s ease-in-out infinite",
-            }}
-          />
-        </div>
-        <div
-          style={{
-            position: "absolute",
-            right: 24,
-            bottom: -22,
-            display: "inline-flex",
-            alignItems: "center",
-            gap: 8,
-            padding: "10px 14px",
-            borderRadius: 999,
-            background: "#1F6B4A",
-            color: "#FBF8F2",
-            fontSize: 12.5,
-            fontWeight: 700,
-            whiteSpace: "nowrap",
-            boxShadow: "0 10px 24px rgba(31,107,74,0.28)",
-            animation: "tf-sliceMove 6s cubic-bezier(0.22,1,0.36,1) infinite",
-            zIndex: 2,
-          }}
-        >
-          <span
-            style={{ width: 7, height: 7, borderRadius: 4, background: "#FBF8F2", display: "block" }}
-          />
-          ₦30,000 ready offline
-        </div>
-      </div>
-
-      <div
-        style={{
-          position: "relative",
-          width: 120,
-          height: 200,
-          borderRadius: 26,
-          padding: 6,
-          boxSizing: "border-box",
-          background: "linear-gradient(150deg, #6E6A64, #2C2A28 32%, #1A1918 68%, #55514B)",
-          boxShadow: "0 24px 60px rgba(42,33,27,0.18)",
-        }}
-      >
-        <div
-          style={{
-            position: "relative",
-            width: "100%",
-            height: "100%",
-            borderRadius: 21,
-            background: "#FBF8F2",
-            overflow: "hidden",
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            justifyContent: "center",
-            gap: 10,
-            padding: 12,
-            boxSizing: "border-box",
-          }}
-        >
-          <div
-            style={{
-              position: "absolute",
-              top: 6,
-              left: "50%",
-              transform: "translateX(-50%)",
-              width: 40,
-              height: 12,
-              borderRadius: 7,
-              background: "#0A0A0A",
-            }}
-          />
-          <span style={{ display: "flex", alignItems: "flex-end", gap: 3, height: 26 }}>
-            {[
-              [12, "2.5s"],
-              [17, "2.55s"],
-              [21, "2.7s"],
-              [26, "2.85s"],
-            ].map(([h, d]) => (
-              <span
-                key={String(h)}
-                style={{
-                  width: 6,
-                  height: h as number,
-                  borderRadius: 3,
-                  display: "block",
-                  background: "#1F6B4A",
-                  animation: `tf-barOn 6s ${d} ease-out infinite`,
-                }}
-              />
-            ))}
-          </span>
-          <span
-            style={{
-              fontSize: 11.5,
-              fontWeight: 700,
-              textAlign: "center",
-              color: "#1F6B4A",
-              animation: "tf-checkIn 6s 2.6s cubic-bezier(0.22,1,0.36,1) infinite",
-            }}
-          >
-            Ready to pay offline
-          </span>
-        </div>
-      </div>
+          <path d="M7 8h10M13 4l4 4-4 4M17 16H7M11 12l-4 4 4 4" />
+        </svg>
+      </span>
+      {receipt("Their phone", "Received", "#1F6B4A", "4deg")}
     </div>
   );
 }
@@ -971,8 +771,7 @@ export default function Security() {
               "opacity 0.9s 0.2s cubic-bezier(0.22,1,0.36,1), transform 0.9s 0.2s cubic-bezier(0.22,1,0.36,1)",
           }}
         >
-          Your phone is checked, your money is protected, and it’s all backed before anything ever
-          leaves your hands.
+          Protected by you, your phone, and a licensed bank.
         </div>
       </div>
 
@@ -989,16 +788,10 @@ export default function Security() {
         }}
       >
         <Point
-          art={<ReadinessArt />}
-          artOrder={1}
-          heading="Checked every time. Never assumed."
-          body="Each time you’re online, your phone is thoroughly checked before it’s allowed to pay offline. Not once. Every time."
-        />
-        <Point
-          art={<ReserveArt />}
+          art={<TwoPhonesArt />}
           artOrder={2}
-          heading="Only a safe amount is ever set aside."
-          body="A small, sensible amount is kept ready on your phone, so you can pay without a second thought. Everything else stays where it always was."
+          heading="Two phones. One receipt."
+          body="Every in-person payment is recorded on both phones at the same moment. No screenshots to trust, no alert to wait for. You both see the same thing."
         />
         <Point
           art={<BiometricArt />}

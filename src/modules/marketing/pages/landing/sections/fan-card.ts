@@ -5,12 +5,14 @@ export const fanCardStyle = (
   background: string,
   color: string,
   shadow: string,
-  gap: number
+  gap: number,
+  height: number | string = 680,
+  padding = "44px 40px"
 ): CSSProperties => ({
   position: "relative",
-  height: 680,
+  height,
   borderRadius: 40,
-  padding: "44px 40px",
+  padding,
   boxSizing: "border-box",
   overflow: "hidden",
   display: "flex",

@@ -404,62 +404,6 @@ export default function PhoneMock({ v }: { v: PhoneVals }) {
               </div>
             </div>
 
-            {v.offline && (
-              <div
-                style={{
-                  padding: "10px 22px 0",
-                  animation: "tf-fadeUp 0.5s cubic-bezier(0.22,1,0.36,1) both",
-                }}
-              >
-                <div
-                  style={{
-                    padding: "14px 16px",
-                    borderRadius: 20,
-                    background: "#FFFFFF",
-                    border: "1px solid #EFE8DB",
-                  }}
-                >
-                  <div
-                    style={{
-                      display: "flex",
-                      alignItems: "baseline",
-                      justifyContent: "space-between",
-                    }}
-                  >
-                    <span style={{ fontSize: 13.5, fontWeight: 700 }}>This offline session</span>
-                    <span
-                      style={{
-                        fontSize: 13.5,
-                        fontWeight: 700,
-                        fontVariantNumeric: "tabular-nums",
-                      }}
-                    >
-                      ₦30k left
-                    </span>
-                  </div>
-                  <div
-                    style={{
-                      height: 6,
-                      borderRadius: 3,
-                      background: "#EFE8DB",
-                      marginTop: 10,
-                      overflow: "hidden",
-                    }}
-                  >
-                    <span
-                      style={{
-                        display: "block",
-                        height: "100%",
-                        width: "100%",
-                        borderRadius: 3,
-                        background: "#2A211B",
-                      }}
-                    />
-                  </div>
-                </div>
-              </div>
-            )}
-
             <div
               style={{
                 padding: "26px 22px 6px",
@@ -953,7 +897,7 @@ export default function PhoneMock({ v }: { v: PhoneVals }) {
                 marginTop: 24,
               }}
             >
-              Today, 9:41 · No network needed
+              Today, 9:41 · Instant · Final
             </div>
           </div>
           <div

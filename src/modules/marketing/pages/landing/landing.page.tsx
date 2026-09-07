@@ -21,6 +21,7 @@ import Recognition from "./sections/recognition";
 import HowItWorks from "./sections/how-it-works";
 import Security from "./sections/security";
 import Everyday from "./sections/everyday";
+import HowIntro from "./sections/how-intro";
 import Business, { BusinessIntro } from "./sections/business";
 import Faq from "./sections/faq";
 import SiteFooter from "./sections/site-footer";
@@ -52,15 +53,19 @@ function phoneVals(beat: number, phase: number): PhoneVals {
     sig2: offline ? "rgba(42,33,27,0.22)" : "currentColor",
     syncing: (beat === 0 && phase === 0) || (beat === 4 && phase === 0),
     synced,
-    balance: synced ? "4,959,544" : "4,964,544",
+    balance: (beat === 3 && phase >= 1) || beat === 4 ? "4,959,544" : "4,964,544",
     readyBg: offline ? "#FAEFE8" : "#EDF4EF",
     readyMuted: offline ? "#8A5233" : "#57705F",
-    readyTitle: offline ? "Paying without data" : ready ? "Pay without data" : "Getting ready",
-    readySub: offline
-      ? "₦30,000 left"
+    readyTitle: offline
+      ? "Offline · Ready to pay"
       : ready
-        ? "Up to ₦30,000, no internet needed"
-        : "Setting money aside on this phone",
+        ? "Security check passed"
+        : "Running security check…",
+    readySub: offline
+      ? "Cleared to pay up to ₦30,000"
+      : ready
+        ? "Cleared to pay up to ₦30,000 without network"
+        : "Verifying this phone",
     bars: [bar, bar, bar, bar],
     link: beat === 2 && phase === 0,
     confirm,
@@ -69,7 +74,7 @@ function phoneVals(beat: number, phase: number): PhoneVals {
       ? "8106 4420 31"
       : "No internet involved — the phones are talking to each other.",
     nearFoot: confirm
-      ? "Covered by what’s set aside on this phone."
+      ? "Paid from your balance. No network needed."
       : "Keep the phones close.",
     holdWidth: holding ? "100%" : "0%",
     holdColor: holding ? "#FBF8F2" : "#2A211B",
@@ -203,9 +208,10 @@ export default function LandingPage() {
         stallBtnColor={stall >= 70 ? "#FBF8F2" : "#A79E93"}
       />
 
+      <Everyday />
+      <HowIntro />
       <HowItWorks beat={beat} phone={phone} />
       <Security />
-      <Everyday />
       <BusinessIntro />
       <Business
         bizTotal={(128500 + biz * 4500).toLocaleString("en-NG")}
