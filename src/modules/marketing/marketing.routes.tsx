@@ -1,10 +1,16 @@
 import MarketingLayout from "./marketing.layout";
-import { Suspense, lazy } from "react";
+import LandingPage from "./pages/landing/landing.page";
 import type { RouteType } from "@/router/router.types";
 
-const LandingPage = lazy(() => import("./pages/landing/landing.page"));
-
 export const marketingPaths = ["/"] as const;
+
+/**
+ * The landing page is imported directly rather than through React.lazy. It is
+ * the only route, so splitting it bought nothing and cost a round trip: the
+ * browser had to download and run the router before it learned to ask for the
+ * page, and showed a bare "Loading..." in the gap. Reach for lazy again when
+ * there is a second route that most visitors will not open.
+ */
 export const marketingRoutes: RouteType[] = [
   {
     id: "marketing",
@@ -12,11 +18,7 @@ export const marketingRoutes: RouteType[] = [
     children: [
       {
         path: "/",
-        element: (
-          <Suspense fallback={<div>Loading...</div>}>
-            <LandingPage />
-          </Suspense>
-        ),
+        element: <LandingPage />,
       },
     ],
   },
