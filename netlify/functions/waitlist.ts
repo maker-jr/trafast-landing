@@ -40,6 +40,9 @@ function isRateLimited(ip: string): boolean {
 
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 
+const UUID_PATTERN =
+  /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+
 const GENERIC_FAILURE =
   "We couldn’t save your email just now. Please try again shortly.";
 
@@ -55,11 +58,27 @@ export default async (req: Request, context: Context): Promise<Response> => {
     return json({ message: "Method not allowed." }, 405);
   }
 
-  const apiKey = process.env.RESEND_API_KEY;
-  const audienceId = process.env.RESEND_AUDIENCE_ID;
+  // Trimmed: a value pasted into the Netlify UI can carry a trailing newline
+  // or wrapping quotes, which reach Resend as part of the path and 404.
+  const apiKey = process.env.RESEND_API_KEY?.trim().replace(/^["']|["']$/g, "");
+  const audienceId = process.env.RESEND_AUDIENCE_ID?.trim().replace(
+    /^["']|["']$/g,
+    ""
+  );
+
   if (!apiKey || !audienceId) {
     console.error(
       "waitlist: RESEND_API_KEY and/or RESEND_AUDIENCE_ID are not configured"
+    );
+    return json({ message: GENERIC_FAILURE }, 500);
+  }
+
+  // Resend audience ids are UUIDs. Catching a malformed one here turns an
+  // opaque "Audience not found" into something that names the actual problem.
+  if (!UUID_PATTERN.test(audienceId)) {
+    console.error(
+      `waitlist: RESEND_AUDIENCE_ID is not a UUID (got ${JSON.stringify(audienceId)}). ` +
+        "Copy the id from the audience's page in the Resend dashboard, not its name."
     );
     return json({ message: GENERIC_FAILURE }, 500);
   }
@@ -117,11 +136,18 @@ export default async (req: Request, context: Context): Promise<Response> => {
 
   // 409 means they are already on the list, which is a success from here.
   if (!response.ok && response.status !== 409) {
-    console.error(
-      "waitlist: Resend rejected the contact",
-      response.status,
-      await response.text().catch(() => "<unreadable body>")
-    );
+    const detail = await response.text().catch(() => "<unreadable body>");
+
+    if (response.status === 404) {
+      console.error(
+        `waitlist: Resend has no audience ${audienceId} for this API key. ` +
+          "Check RESEND_AUDIENCE_ID against the Audiences page, and that the key " +
+          "belongs to the same Resend team as the audience."
+      );
+      return json({ message: GENERIC_FAILURE }, 500);
+    }
+
+    console.error("waitlist: Resend rejected the contact", response.status, detail);
     return json({ message: GENERIC_FAILURE }, 502);
   }
 
