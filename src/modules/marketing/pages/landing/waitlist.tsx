@@ -1,5 +1,5 @@
-import { useRef, useState } from "react";
-import type { FormEvent } from "react";
+import { createContext, useContext, useRef, useState } from "react";
+import type { FormEvent, ReactNode } from "react";
 
 export type WaitlistStatus = "idle" | "pending" | "error" | "done";
 
@@ -33,7 +33,7 @@ async function postWaitlist(input: {
   return { ok: false, message: body?.message ?? GENERIC_FAILURE };
 }
 
-export function useWaitlist() {
+function useWaitlistState() {
   const [email, setEmail] = useState("");
   const [status, setStatus] = useState<WaitlistStatus>("idle");
   const [error, setError] = useState("");
@@ -72,4 +72,27 @@ export function useWaitlist() {
   };
 
   return { email, onEmailChange, status, error, onSubmit, honeypotRef };
+}
+
+type WaitlistValue = ReturnType<typeof useWaitlistState>;
+
+const WaitlistContext = createContext<WaitlistValue | null>(null);
+
+/**
+ * One waitlist for the whole page. The footer form and the sheet are two ways
+ * into the same signup, so joining from either has to leave both showing the
+ * same thing.
+ */
+export function WaitlistProvider({ children }: { children: ReactNode }) {
+  const value = useWaitlistState();
+  return (
+    <WaitlistContext.Provider value={value}>{children}</WaitlistContext.Provider>
+  );
+}
+
+// eslint-disable-next-line react-refresh/only-export-components
+export function useWaitlist(): WaitlistValue {
+  const value = useContext(WaitlistContext);
+  if (!value) throw new Error("useWaitlist must be used inside a WaitlistProvider");
+  return value;
 }

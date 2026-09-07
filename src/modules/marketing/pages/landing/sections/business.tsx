@@ -1,4 +1,4 @@
-import type { CSSProperties } from "react";
+import type { CSSProperties, MouseEvent } from "react";
 import FanArt from "./fan-art";
 import { useT } from "../i18n/use-language";
 import { fanBody, fanCardStyle, fanHeading, fanWrap } from "./fan-card";
@@ -107,13 +107,21 @@ export function BusinessIntro() {
 }
 
 type Props = {
+  /** Opens the waitlist sheet. */
+  onCta: (e: MouseEvent) => void;
   bizTotal: string;
   bizCount: string;
   bizOfflineCount: string;
   bizSyncLabel: string;
 };
 
-export default function Business({ bizTotal, bizCount, bizOfflineCount, bizSyncLabel }: Props) {
+export default function Business({
+  onCta,
+  bizTotal,
+  bizCount,
+  bizOfflineCount,
+  bizSyncLabel,
+}: Props) {
   const t = useT();
 
   return (
@@ -542,7 +550,8 @@ export default function Business({ bizTotal, bizCount, bizOfflineCount, bizSyncL
           }}
         >
           <a
-            href="mailto:hello@trafast.app?subject=Trafast%20for%20my%20counter"
+            href="#signup"
+            onClick={onCta}
             className="tf-cta-amber"
             style={{
               height: 64,
@@ -559,7 +568,7 @@ export default function Business({ bizTotal, bizCount, bizOfflineCount, bizSyncL
             {t.biz.add}
           </a>
           <a
-            href="mailto:hello@trafast.app"
+            href="mailto:hello@trafast.ng"
             className="tf-textlink"
             style={{
               fontSize: 18,

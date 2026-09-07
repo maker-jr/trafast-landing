@@ -23,19 +23,6 @@ export function scrollToId(id: string, offset = 0) {
   });
 }
 
-export function scrollToSignup() {
-  const form = document.querySelector("[data-signup]");
-  if (!form) return;
-  window.scrollTo({
-    top: form.getBoundingClientRect().top + window.scrollY - 120,
-    behavior: "smooth",
-  });
-  setTimeout(() => {
-    const input = form.querySelector("input");
-    if (input) input.focus();
-  }, 700);
-}
-
 /**
  * An eased scroll back to the top, slow enough that the button's progress ring
  * visibly drains on the way. Abandons immediately if the visitor takes over,
@@ -392,10 +379,14 @@ export function useLandingMotion(
   }, []);
 }
 
-/** Eases wheel input into `window.scrollTo`, as the prototype does. */
-export function useSmoothWheel() {
+/**
+ * Eases wheel input into `window.scrollTo`, as the prototype does. Pass false
+ * while something else owns the wheel — an open modal with its own scroll area,
+ * for instance — or the page behind it will scroll instead.
+ */
+export function useSmoothWheel(enabled = true) {
   useEffect(() => {
-    if (!SMOOTH_WHEEL || prefersReducedMotion()) return;
+    if (!enabled || !SMOOTH_WHEEL || prefersReducedMotion()) return;
 
     let target = window.scrollY;
     let running = false;
@@ -495,5 +486,5 @@ export function useSmoothWheel() {
       window.removeEventListener("blur", onPointerRelease);
       stop();
     };
-  }, []);
+  }, [enabled]);
 }

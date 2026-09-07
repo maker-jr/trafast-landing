@@ -11,7 +11,6 @@ import {
 } from "./landing.data";
 import {
   scrollToId,
-  scrollToSignup,
   useLandingMotion,
   useSmoothWheel,
 } from "./use-landing-motion";
@@ -26,6 +25,8 @@ import Business, { BusinessIntro } from "./sections/business";
 import Faq from "./sections/faq";
 import SiteFooter from "./sections/site-footer";
 import BackToTop from "./sections/back-to-top";
+import WaitlistSheet from "./sections/waitlist-sheet";
+import { WaitlistProvider } from "./waitlist";
 import { LanguageProvider, useT } from "./i18n/use-language";
 import type { PhoneVals } from "./sections/phone-mock";
 
@@ -87,7 +88,9 @@ function phoneVals(beat: number, phase: number): PhoneVals {
 export default function LandingPage() {
   return (
     <LanguageProvider>
-      <Landing />
+      <WaitlistProvider>
+        <Landing />
+      </WaitlistProvider>
     </LanguageProvider>
   );
 }
@@ -100,6 +103,7 @@ function Landing() {
   const [phase, setPhase] = useState(0);
   const [biz, setBiz] = useState(0);
   const [progress, setProgress] = useState(0);
+  const [sheetOpen, setSheetOpen] = useState(false);
   const [pastFirstScreen, setPastFirstScreen] = useState(false);
 
   const stepIndexRef = useRef(0);
@@ -158,7 +162,8 @@ function Landing() {
   }, []);
 
   useLandingMotion(enterBeat, onProgress);
-  useSmoothWheel();
+  // The wheel must belong to the sheet's own scroll area while it is open.
+  useSmoothWheel(!sheetOpen);
 
   const t = useT();
   const copy = t.hero[audience];
@@ -167,9 +172,9 @@ function Landing() {
   const phone = phoneVals(beat, phase);
 
   const onCta = (e: MouseEvent) => {
-    if (LIVE) return;
     e.preventDefault();
-    scrollToSignup();
+    if (LIVE) return;
+    setSheetOpen(true);
   };
 
   const jump = (id: string, next?: Audience) => (e: MouseEvent) => {
@@ -234,6 +239,7 @@ function Landing() {
       <Security />
       <BusinessIntro />
       <Business
+        onCta={onCta}
         bizTotal={(128500 + biz * 4500).toLocaleString("en-NG")}
         bizCount={String(41 + biz)}
         bizOfflineCount={String(17 + biz)}
@@ -249,7 +255,8 @@ function Landing() {
         goFaq={jump("faq")}
       />
 
-      <BackToTop progress={progress} visible={pastFirstScreen} />
+      <BackToTop progress={progress} visible={pastFirstScreen && !sheetOpen} />
+      <WaitlistSheet open={sheetOpen} onClose={() => setSheetOpen(false)} />
     </div>
   );
 }

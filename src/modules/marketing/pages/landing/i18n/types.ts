@@ -96,6 +96,12 @@ export type Dict = {
     getSub: string;
     soonSub: string;
     email: string;
+    /** Sheet headline. */
+    first: string;
+    /** Sheet sub-heading. */
+    waitSub: string;
+    /** What signing up actually gets you, shown in the sheet's footer. */
+    nospam: string;
     early: string;
     onList: string;
     /** Contains a literal {email} placeholder. */
