@@ -24,9 +24,9 @@ export const ha: Dict = {
       meta: "Kasuwar Oyingbo",
       amount: "Ana tura",
       labels: {
-        ready: "Riƙe don tura",
-        holding: "Ci gaba da riƙe…",
-        pending: "Ana tura ba tare da network",
+        ready: "Riƙe don turawa",
+        holding: "Ci gaba da riƙewa…",
+        pending: "Ana tura ba tare da network ba",
         done: "An tura",
       },
       notes: {
@@ -63,9 +63,9 @@ export const ha: Dict = {
     worksOffline: "Yana aiki ba tare da network",
   },
   rec: {
-    know: "Ka san wannan lokaci.",
+    know: "Ka san wannan lokutan.",
     b1: "Kai! Wane irin network ne wannan?",
-    b2: "Mtsew. Wannan network ma.",
+    b2: "Mtsew. Wannan network sai ahankali.",
     b3: "An cire kuɗina fa!",
     we: "Mun sani. Don wannan ne muka gina Trafast.",
     transfer: "Turawa",
@@ -86,7 +86,7 @@ export const ha: Dict = {
     a1: "Ba sauran alert na ƙarya. Idan ya ce an biya, an biya.",
     a2: "Ba sauran “an cire amma ba a saka ba”.",
     a3: "Ba sauran “data ta ƙare”.",
-    a4: "Ba sauran tsayar da layi yayin da wani abu ke juyawa.",
+    a4: "Ba sauran tsayar da layi yayin da ka ke jiran netwok.",
   },
   seq: { s0: "Dakata!", s1: "Ta yaya wannan yake aiki?", s2: "Na yi murna da ka tambaya." },
   how: {
@@ -149,7 +149,7 @@ export const ha: Dict = {
         "A’a. Kana da balance ɗaya, kamar kowace manhajar banki. Babu abin da ake motsa ko ajiye. Trafast na ba wayarka izini ne kawai ta biya daga wannan balance idan babu network.",
       ],
       [
-        "Ta yaya yake aiki ba tare da intanet kwata-kwata?",
+        "Ta yaya yake aiki ba tare da intanet ba kwata-kwata?",
         "Yayin da kake kan intanet, Trafast na yi wa wayarka binciken tsaro ta ba ta izinin biya har zuwa iyaka mai aminci. Idan network ya ɓace, kana biya daga wayarka zuwa tasu kai tsaye. Babu buƙatar intanet a wannan lokaci.",
       ],
       [
