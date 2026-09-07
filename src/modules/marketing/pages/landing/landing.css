@@ -46,6 +46,15 @@
 .tf-landing a.tf-legal:hover {
   color: #2A211B;
 }
+.tf-landing button.tf-langbtn:hover {
+  background: #E9E1D2;
+}
+.tf-landing button.tf-langopt:hover {
+  background: #F0EADE;
+}
+.tf-landing button.tf-totop:hover {
+  background: #1C1611;
+}
 .tf-landing input::placeholder {
   color: rgba(251, 248, 242, 0.35);
 }
@@ -79,9 +88,19 @@
 @keyframes tf-pulse { 0%, 100% { transform: scale(1); opacity: 1; } 50% { transform: scale(0.6); opacity: 0.4; } }
 @keyframes tf-fill { from { width: 0; } to { width: 100%; } }
 
+@media (max-width: 1240px) {
+  .tf-landing [data-m="langname"] { display: none !important; }
+  .tf-landing [data-m="langbtn"] { padding: 0 18px !important; }
+}
+
+@media (max-width: 1080px) {
+  .tf-landing [data-m="hide"] { display: none !important; }
+}
+
 @media (max-width: 820px) {
   .tf-landing [data-m="nav"] { padding: 16px 20px !important; gap: 10px !important; }
-  .tf-landing [data-m="brand"], .tf-landing [data-m="hide"], .tf-landing [data-m="navcta"] { display: none !important; }
+  .tf-landing [data-m="brand"], .tf-landing [data-m="hide"], .tf-landing [data-m="navctalink"] { display: none !important; }
+  .tf-landing [data-m="langbtn"] { height: 48px !important; padding: 0 14px !important; }
   .tf-landing [data-m="hero"] { flex: none !important; height: calc(100vh - 96px) !important; min-height: 640px !important; padding: 0 20px 0 !important; align-items: center !important; }
   .tf-landing [data-m="herocopy"] { gap: 0 !important; margin-bottom: 0; height: 100%; box-sizing: border-box; justify-content: flex-start; padding-top: 30vh; }
   .tf-landing [data-m="hero"] h1 { font-size: clamp(52px, 15.4vw, 68px) !important; line-height: 0.9 !important; }

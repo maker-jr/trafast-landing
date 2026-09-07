@@ -1,6 +1,8 @@
 import type { CSSProperties, MouseEvent } from "react";
 import logo from "@/assets/images/logo-primary.png";
 import type { Audience } from "../landing.data";
+import { useT } from "../i18n/use-language";
+import LanguageSwitcher from "./language-switcher";
 
 const tabBase: CSSProperties = {
   height: 52,
@@ -48,6 +50,7 @@ export default function SiteNav({
   onSecurity,
   onCta,
 }: Props) {
+  const t = useT();
   const personal = audience === "business" ? OFF : ON;
   const business = audience === "business" ? ON : OFF;
 
@@ -108,7 +111,7 @@ export default function SiteNav({
               boxShadow: personal.shadow,
             }}
           >
-            Personal
+            {t.nav.personal}
           </button>
           <button
             role="tab"
@@ -121,7 +124,7 @@ export default function SiteNav({
               boxShadow: business.shadow,
             }}
           >
-            Business
+            {t.nav.business}
           </button>
         </div>
         <span
@@ -135,15 +138,20 @@ export default function SiteNav({
           }}
         />
         <a href="#how-it-works" onClick={onHow} data-m="hide" className="tf-navlink" style={navLink}>
-          How it works
+          {t.nav.how}
         </a>
         <a href="#security" onClick={onSecurity} data-m="hide" className="tf-navlink" style={navLink}>
-          Security
+          {t.nav.security}
         </a>
       </div>
 
-      <div data-m="navcta" style={{ display: "flex", alignItems: "center", flex: "none" }}>
+      <div
+        data-m="navcta"
+        style={{ display: "flex", alignItems: "center", gap: 10, flex: "none" }}
+      >
+        <LanguageSwitcher />
         <a
+          data-m="navctalink"
           href="#signup"
           onClick={onCta}
           className="tf-cta-amber"

@@ -36,6 +36,52 @@ export function scrollToSignup() {
   }, 700);
 }
 
+/**
+ * An eased scroll back to the top, slow enough that the button's progress ring
+ * visibly drains on the way. Abandons immediately if the visitor takes over,
+ * so it never fights them for the scroll position.
+ */
+export function rewindToTop(onSettled: () => void) {
+  const from = window.scrollY;
+  if (from <= 0 || prefersReducedMotion()) {
+    window.scrollTo(0, 0);
+    onSettled();
+    return;
+  }
+
+  const duration = Math.min(1100, 500 + from * 0.18);
+  const started = performance.now();
+  let cancelled = false;
+
+  const cancel = () => {
+    cancelled = true;
+  };
+  const listeners = ["wheel", "pointerdown", "touchstart", "keydown"] as const;
+  const detach = () =>
+    listeners.forEach((type) => window.removeEventListener(type, cancel));
+  listeners.forEach((type) =>
+    window.addEventListener(type, cancel, { passive: true })
+  );
+
+  const step = (now: number) => {
+    if (cancelled) {
+      detach();
+      onSettled();
+      return;
+    }
+    const k = Math.min(1, (now - started) / duration);
+    window.scrollTo(0, from * Math.pow(1 - k, 4));
+    if (k < 1) {
+      requestAnimationFrame(step);
+    } else {
+      detach();
+      onSettled();
+    }
+  };
+
+  requestAnimationFrame(step);
+}
+
 const clamp01 = (n: number) => Math.min(1, Math.max(0, n));
 const ease = (n: number) => 1 - Math.pow(1 - n, 3);
 
@@ -148,11 +194,18 @@ function driveStory(
  * the sticky phone's scale, which walkthrough beat is active, the fanning
  * feature cards, the zoom-in section intros and the generic reveals.
  */
-export function useLandingMotion(onBeatChange: (beat: number) => void) {
+export function useLandingMotion(
+  onBeatChange: (beat: number) => void,
+  onProgress: (progress: number, pastFirstScreen: boolean) => void
+) {
   const beatRef = useRef(0);
   const rafRef = useRef(0);
+  const progressRef = useRef(-1);
+  const pastRef = useRef(false);
   const onBeatRef = useRef(onBeatChange);
   onBeatRef.current = onBeatChange;
+  const onProgressRef = useRef(onProgress);
+  onProgressRef.current = onProgress;
 
   useEffect(() => {
     const onScroll = () => {
@@ -161,6 +214,17 @@ export function useLandingMotion(onBeatChange: (beat: number) => void) {
         rafRef.current = 0;
         const reduce = prefersReducedMotion();
         const vh = window.innerHeight;
+
+        // How far down the page we are, for the back-to-top button's ring.
+        // Only reported when it moves enough to be worth a render.
+        const max = document.documentElement.scrollHeight - vh;
+        const progress = max > 0 ? Math.min(1, window.scrollY / max) : 0;
+        const past = window.scrollY > vh * 0.9;
+        if (Math.abs(progress - progressRef.current) > 0.004 || past !== pastRef.current) {
+          progressRef.current = progress;
+          pastRef.current = past;
+          onProgressRef.current(progress, past);
+        }
 
         const hero = document.querySelector("[data-hero]");
         if (hero) {

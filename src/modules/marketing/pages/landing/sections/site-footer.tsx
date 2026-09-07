@@ -1,6 +1,7 @@
 import type { MouseEvent } from "react";
 import logo from "@/assets/images/logo-primary.png";
 import { useWaitlist } from "../waitlist";
+import { useT } from "../i18n/use-language";
 
 const footLink = { fontSize: 19, fontWeight: 600, color: "#FBF8F2" } as const;
 const colHead = { fontSize: 17, fontWeight: 700, color: "rgba(251,248,242,0.5)" } as const;
@@ -22,6 +23,7 @@ export default function SiteFooter({
   goSecurity,
   goFaq,
 }: Props) {
+  const t = useT();
   const { email, onEmailChange, status, error, onSubmit, honeypotRef } = useWaitlist();
 
   return (
@@ -72,9 +74,9 @@ export default function SiteFooter({
                   textWrap: "balance",
                 }}
               >
-                Pay anytime.
+                {t.close.pay}
                 <br />
-                <span style={{ color: "rgba(251,248,242,0.45)" }}>Anywhere. Anyway.</span>
+                <span style={{ color: "rgba(251,248,242,0.45)" }}>{t.close.any}</span>
               </div>
             </div>
             <div
@@ -100,7 +102,7 @@ export default function SiteFooter({
                   background: live ? "#1F6B4A" : "#F5B32C",
                 }}
               />
-              {live ? "Live in Nigeria" : "Launching soon"}
+              {live ? t.close.live : t.close.soon}
             </div>
           </div>
 
@@ -126,7 +128,7 @@ export default function SiteFooter({
                     fontWeight: 900,
                   }}
                 >
-                  Get the app.
+                  {t.close.get}
                 </div>
                 <div
                   style={{
@@ -147,8 +149,7 @@ export default function SiteFooter({
                       textWrap: "balance",
                     }}
                   >
-                    Free to download. Two minutes to set up. Works the next time the network
-                    doesn’t.
+                    {t.close.getSub}
                   </div>
                   <div style={{ display: "flex", alignItems: "center", gap: 12, flexWrap: "wrap" }}>
                     <a
@@ -246,7 +247,7 @@ export default function SiteFooter({
                         color: "#F5B32C",
                       }}
                     >
-                      You’re on the list.
+                      {t.close.onList}
                     </div>
                     <div
                       style={{
@@ -257,7 +258,7 @@ export default function SiteFooter({
                         maxWidth: 560,
                       }}
                     >
-                      We’ll email {email} the moment Trafast is live.
+                      {t.close.willEmail.replace("{email}", email)}
                     </div>
                   </div>
                 ) : (
@@ -287,7 +288,7 @@ export default function SiteFooter({
                       required
                       value={email}
                       onChange={(e) => onEmailChange(e.target.value)}
-                      placeholder="Enter your email"
+                      placeholder={t.close.email}
                       aria-label="Email address"
                       aria-invalid={status === "error"}
                       aria-describedby={status === "error" ? "waitlist-error" : undefined}
@@ -327,7 +328,7 @@ export default function SiteFooter({
                           textWrap: "balance",
                         }}
                       >
-                        We’re launching soon. Be first in line when Trafast goes live in Nigeria.
+                        {t.close.soonSub}
                       </div>
                       <button
                         type="submit"
@@ -349,7 +350,7 @@ export default function SiteFooter({
                           flex: "none",
                         }}
                       >
-                        {status === "pending" ? "Joining…" : "Get early access"}
+                        {status === "pending" ? "Joining…" : t.close.early}
                       </button>
                     </div>
                     {status === "error" && (
@@ -395,22 +396,22 @@ export default function SiteFooter({
               }}
             >
               <div style={{ display: "flex", flexDirection: "column", gap: 18 }}>
-                <span style={colHead}>Product</span>
+                <span style={colHead}>{t.close.product}</span>
                 <a href="#top" onClick={goPersonal} className="tf-footlink" style={footLink}>
-                  Personal
+                  {t.nav.personal}
                 </a>
                 <a href="#business" onClick={goBusiness} className="tf-footlink" style={footLink}>
-                  Business
+                  {t.nav.business}
                 </a>
                 <a href="#how-it-works" onClick={goHow} className="tf-footlink" style={footLink}>
-                  How it works
+                  {t.nav.how}
                 </a>
                 <a href="#security" onClick={goSecurity} className="tf-footlink" style={footLink}>
-                  Security
+                  {t.nav.security}
                 </a>
               </div>
               <div style={{ display: "flex", flexDirection: "column", gap: 18 }}>
-                <span style={colHead}>Help</span>
+                <span style={colHead}>{t.close.help}</span>
                 <a href="#faq" onClick={goFaq} className="tf-footlink" style={footLink}>
                   FAQ
                 </a>
@@ -419,7 +420,7 @@ export default function SiteFooter({
                 </a>
               </div>
               <div style={{ display: "flex", flexDirection: "column", gap: 18 }}>
-                <span style={colHead}>Follow</span>
+                <span style={colHead}>{t.close.follow}</span>
                 <a href="#" className="tf-footlink" style={footLink}>
                   X
                 </a>
@@ -447,13 +448,13 @@ export default function SiteFooter({
             color: "#8C8177",
           }}
         >
-          <span>© Trafast 2026 · Funds held by a licensed, insured partner institution.</span>
+          <span>{t.close.copy}</span>
           <div style={{ display: "flex", alignItems: "center", gap: 24 }}>
             <a href="#" className="tf-legal" style={{ color: "#8C8177" }}>
-              Terms
+              {t.close.terms}
             </a>
             <a href="#" className="tf-legal" style={{ color: "#8C8177" }}>
-              Privacy
+              {t.close.privacy}
             </a>
           </div>
         </div>

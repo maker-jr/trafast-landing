@@ -1,5 +1,6 @@
 import type { CSSProperties } from "react";
 import FanArt from "./fan-art";
+import { useT } from "../i18n/use-language";
 import { fanBody, fanCardStyle, fanHeading, fanWrap } from "./fan-card";
 
 const TRANSFERS = [
@@ -17,6 +18,8 @@ const deadBar = (height: number, background: string): CSSProperties => ({
 });
 
 export function BusinessIntro() {
+  const t = useT();
+
   return (
     <section id="business" data-business="" style={{ background: "#2A211B", color: "#FBF8F2" }}>
       <div
@@ -66,7 +69,7 @@ export function BusinessIntro() {
                 display: "inline-block",
               }}
             />
-            Trafast for Business
+            {t.biz.eyebrow}
           </span>
           <div
             style={{
@@ -78,7 +81,7 @@ export function BusinessIntro() {
               maxWidth: 1200,
             }}
           >
-            Run a business?
+            {t.biz.run}
           </div>
         </div>
         <div
@@ -96,7 +99,7 @@ export function BusinessIntro() {
               "opacity 0.9s 0.2s cubic-bezier(0.22,1,0.36,1), transform 0.9s 0.2s cubic-bezier(0.22,1,0.36,1)",
           }}
         >
-          Then you already know what a dead network costs you at the counter.
+          {t.biz.runSub}
         </div>
       </div>
     </section>
@@ -111,6 +114,8 @@ type Props = {
 };
 
 export default function Business({ bizTotal, bizCount, bizOfflineCount, bizSyncLabel }: Props) {
+  const t = useT();
+
   return (
     <section style={{ background: "#2A211B", color: "#FBF8F2" }}>
       <div
@@ -149,7 +154,7 @@ export default function Business({ bizTotal, bizCount, bizOfflineCount, bizSyncL
                 "opacity 0.9s 0s cubic-bezier(0.22,1,0.36,1), transform 0.9s 0s cubic-bezier(0.22,1,0.36,1)",
             }}
           >
-            Never lose a sale.
+            {t.biz.never}
           </div>
           <div
             data-reveal=""
@@ -166,8 +171,7 @@ export default function Business({ bizTotal, bizCount, bizOfflineCount, bizSyncL
                 "opacity 0.9s 0.1s cubic-bezier(0.22,1,0.36,1), transform 0.9s 0.1s cubic-bezier(0.22,1,0.36,1)",
             }}
           >
-            Keep everything you use. Trafast just makes sure you still get paid when the network
-            doesn’t.
+            {t.biz.neverSub}
           </div>
         </div>
 
@@ -177,10 +181,8 @@ export default function Business({ bizTotal, bizCount, bizOfflineCount, bizSyncL
             data-fan="0"
             style={fanCardStyle(0, "#F3EDE2", "#2A211B", "0 40px 90px rgba(0,0,0,0.35)", 14)}
           >
-            <div style={{ ...fanHeading, marginBottom: 4 }}>Transfers, as usual.</div>
-            <div style={fanBody}>
-              Nothing to switch, nothing to relearn. Keep taking payments the way you do now.
-            </div>
+            <div style={{ ...fanHeading, marginBottom: 4 }}>{t.biz.h0}</div>
+            <div style={fanBody}>{t.biz.b0}</div>
             <FanArt>
               <div
                 style={{
@@ -277,11 +279,8 @@ export default function Business({ bizTotal, bizCount, bizOfflineCount, bizSyncL
             data-fan="1"
             style={fanCardStyle(1, "#1F1813", "#FBF8F2", "0 40px 90px rgba(0,0,0,0.35)", 14)}
           >
-            <div style={{ ...fanHeading, marginBottom: 4 }}>Network dies? Still paid.</div>
-            <div style={fanBody}>
-              The moment a transfer won’t go, your customer pays you with Trafast. Phone to phone,
-              on the spot.
-            </div>
+            <div style={{ ...fanHeading, marginBottom: 4 }}>{t.biz.h1}</div>
+            <div style={fanBody}>{t.biz.b1}</div>
             <FanArt>
               <div
                 style={{
@@ -419,11 +418,8 @@ export default function Business({ bizTotal, bizCount, bizOfflineCount, bizSyncL
             data-fan="2"
             style={fanCardStyle(2, "#F5B32C", "#2A211B", "0 40px 90px rgba(0,0,0,0.35)", 14)}
           >
-            <div style={{ ...fanHeading, marginBottom: 4 }}>One record. Your bank.</div>
-            <div style={fanBody}>
-              Every Trafast sale settles to your account the moment you reconnect, alongside
-              everything else.
-            </div>
+            <div style={{ ...fanHeading, marginBottom: 4 }}>{t.biz.h2}</div>
+            <div style={fanBody}>{t.biz.b2}</div>
             <FanArt>
               <div
                 style={{
@@ -560,7 +556,7 @@ export default function Business({ bizTotal, bizCount, bizOfflineCount, bizSyncL
               alignItems: "center",
             }}
           >
-            Add Trafast to your counter
+            {t.biz.add}
           </a>
           <a
             href="mailto:hello@trafast.app"
@@ -574,7 +570,7 @@ export default function Business({ bizTotal, bizCount, bizOfflineCount, bizSyncL
               gap: 8,
             }}
           >
-            Talk to us <span style={{ display: "inline-block" }}>→</span>
+            {t.biz.talk} <span style={{ display: "inline-block" }}>→</span>
           </a>
         </div>
       </div>

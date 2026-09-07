@@ -1,5 +1,5 @@
 import { useLayoutEffect, useState } from "react";
-import { FAQ_DATA } from "../landing.data";
+import { useLanguage } from "../i18n/use-language";
 
 type Width = { text: number; full: number };
 
@@ -8,10 +8,14 @@ type Width = { text: number; full: number };
  * ragged stack rather than a list of full-width bars. That needs a real
  * measurement of the question at its rendered font.
  */
-function useFaqWidths() {
+function useFaqWidths(lang: string) {
   const [widths, setWidths] = useState<Record<number, Width>>({});
 
   useLayoutEffect(() => {
+    // A new language means new question lengths, so drop the old measurements
+    // rather than letting the pills keep the previous language's widths.
+    setWidths({});
+
     const measure = () => {
       const next: Record<number, Width> = {};
       document.querySelectorAll<HTMLElement>("[data-faqq]").forEach((el, i) => {
@@ -37,20 +41,25 @@ function useFaqWidths() {
       setWidths({});
       setTimeout(measure, 50);
     };
+    // Re-measure once the swapped-in text has been laid out.
+    const afterSwap = setTimeout(measure, 120);
+
     window.addEventListener("resize", onResize);
     return () => {
       clearTimeout(initial);
+      clearTimeout(afterSwap);
       window.removeEventListener("resize", onResize);
     };
-  }, []);
+  }, [lang]);
 
   return widths;
 }
 
 export default function Faq() {
+  const { t, lang } = useLanguage();
   const [open, setOpen] = useState(0);
   const [hover, setHover] = useState(-1);
-  const widths = useFaqWidths();
+  const widths = useFaqWidths(lang);
 
   return (
     <section id="faq" style={{ background: "#FBF8F2", color: "#2A211B" }}>
@@ -90,7 +99,7 @@ export default function Faq() {
                 "opacity 0.9s 0s cubic-bezier(0.22,1,0.36,1), transform 0.9s 0s cubic-bezier(0.22,1,0.36,1)",
             }}
           >
-            Fair questions.
+            {t.faq.head}
           </div>
           <div
             data-reveal=""
@@ -107,7 +116,7 @@ export default function Faq() {
                 "opacity 0.9s 0.1s cubic-bezier(0.22,1,0.36,1), transform 0.9s 0.1s cubic-bezier(0.22,1,0.36,1)",
             }}
           >
-            The ones people ask us before their first offline payment.
+            {t.faq.sub}
           </div>
         </div>
 
@@ -125,7 +134,7 @@ export default function Faq() {
               "opacity 0.9s 0.1s cubic-bezier(0.22,1,0.36,1), transform 0.9s 0.1s cubic-bezier(0.22,1,0.36,1)",
           }}
         >
-          {FAQ_DATA.map(([question, answer], i) => {
+          {t.faq.items.map(([question, answer], i) => {
             const isOpen = open === i;
             const isHover = hover === i;
             const measured = widths[i];

@@ -1,5 +1,7 @@
 import type { CSSProperties, MouseEvent } from "react";
-import type { AudienceCopy, Step } from "../landing.data";
+import type { Step } from "../landing.data";
+import type { AudienceDict } from "../i18n";
+import { useT } from "../i18n/use-language";
 
 /** The decorative QR block in the floating hero card. b = ink, l = light, a = amber. */
 const QR_CELLS = [
@@ -22,14 +24,26 @@ const signalBar = (height: number, background: string): CSSProperties => ({
 });
 
 type Props = {
-  copy: AudienceCopy;
+  copy: AudienceDict;
+  /** Avatar initials and colour for the counterparty card. */
+  initials: string;
+  avatar: string;
   step: Step;
   primaryCta: string;
   qrTag: string;
   onCta: (e: MouseEvent) => void;
 };
 
-export default function Hero({ copy, step, primaryCta, qrTag, onCta }: Props) {
+export default function Hero({
+  copy,
+  initials,
+  avatar,
+  step,
+  primaryCta,
+  qrTag,
+  onCta,
+}: Props) {
+  const t = useT();
   const done = step === "done";
   const pending = step === "pending";
   const holding = step === "holding";
@@ -77,9 +91,9 @@ export default function Hero({ copy, step, primaryCta, qrTag, onCta }: Props) {
             textWrap: "balance",
           }}
         >
-          {copy.headlineA}
+          {copy.a}
           <br data-m="hbr" />
-          <span style={{ color: "#8C8177" }}> {copy.headlineB}</span>
+          <span style={{ color: "#8C8177" }}> {copy.b}</span>
         </h1>
         <div data-m="herobottom" style={{ display: "contents" }}>
           <p
@@ -153,7 +167,7 @@ export default function Hero({ copy, step, primaryCta, qrTag, onCta }: Props) {
             <span style={signalBar(15, "#E2D9C9")} />
             <span style={signalBar(18, "#E2D9C9")} />
           </span>
-          No signal
+          {t.hero.noSignal}
         </div>
       </div>
 
@@ -230,7 +244,7 @@ export default function Hero({ copy, step, primaryCta, qrTag, onCta }: Props) {
               color: "#6E6459",
             }}
           >
-            Works offline
+            {t.hero.worksOffline}
           </div>
         </div>
       </div>
@@ -273,10 +287,10 @@ export default function Hero({ copy, step, primaryCta, qrTag, onCta }: Props) {
               alignItems: "center",
               justifyContent: "center",
               flex: "none",
-              background: copy.avatar,
+              background: avatar,
             }}
           >
-            {copy.initials}
+            {initials}
           </span>
           <span style={{ flex: 1, minWidth: 0 }}>
             <span
@@ -290,7 +304,7 @@ export default function Hero({ copy, step, primaryCta, qrTag, onCta }: Props) {
                 textOverflow: "ellipsis",
               }}
             >
-              {copy.counterparty}
+              {copy.who}
             </span>
             <span
               style={{
@@ -333,7 +347,7 @@ export default function Hero({ copy, step, primaryCta, qrTag, onCta }: Props) {
           }}
         >
           <div style={{ fontSize: 16, fontWeight: 700, color: "#8C8177" }}>
-            {copy.amountLabel}
+            {copy.amount}
           </div>
           <div
             style={{

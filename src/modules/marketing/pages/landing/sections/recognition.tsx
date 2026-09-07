@@ -1,8 +1,16 @@
 import type { CSSProperties } from "react";
+import { useT } from "../i18n/use-language";
 
-const BUBBLES: { text: string; align: "flex-start" | "flex-end"; bg: string; size: string; radius: string; delay: string }[] = [
+const BUBBLES: {
+  key: "b1" | "b2" | "b3";
+  align: "flex-start" | "flex-end";
+  bg: string;
+  size: string;
+  radius: string;
+  delay: string;
+}[] = [
   {
-    text: "Kai! Which kind network be dis?",
+    key: "b1",
     align: "flex-start",
     bg: "#FBF8F2",
     size: "clamp(34px, 3.6vw, 56px)",
@@ -10,7 +18,7 @@ const BUBBLES: { text: string; align: "flex-start" | "flex-end"; bg: string; siz
     delay: "0.05s",
   },
   {
-    text: "Mtsew. Dis network sef.",
+    key: "b2",
     align: "flex-end",
     bg: "#EFE8DB",
     size: "clamp(30px, 3.1vw, 48px)",
@@ -18,7 +26,7 @@ const BUBBLES: { text: string; align: "flex-start" | "flex-end"; bg: string; siz
     delay: "0.2s",
   },
   {
-    text: "E don debit me o!",
+    key: "b3",
     align: "flex-start",
     bg: "#F5B32C",
     size: "clamp(30px, 3.1vw, 48px)",
@@ -52,6 +60,8 @@ export default function Recognition({
   stallBtnBg,
   stallBtnColor,
 }: Props) {
+  const t = useT();
+
   return (
     <section style={{ background: "#2A211B", color: "#FBF8F2" }}>
       <div
@@ -92,12 +102,12 @@ export default function Recognition({
                 "opacity 0.9s 0s cubic-bezier(0.22,1,0.36,1), transform 0.9s 0s cubic-bezier(0.22,1,0.36,1)",
             }}
           >
-            You know this moment.
+            {t.rec.know}
           </div>
           <div style={{ display: "flex", flexDirection: "column", gap: 22, maxWidth: 680 }}>
             {BUBBLES.map((b) => (
               <div
-                key={b.text}
+                key={b.key}
                 data-reveal="pop"
                 style={{
                   alignSelf: b.align,
@@ -117,7 +127,7 @@ export default function Recognition({
                   transition: `opacity 0.5s ${b.delay} ease-out, transform 0.8s ${b.delay} cubic-bezier(0.34,1.56,0.64,1)`,
                 }}
               >
-                {b.text}
+                {t.rec[b.key]}
               </div>
             ))}
           </div>
@@ -158,7 +168,9 @@ export default function Recognition({
               }}
             >
               <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-                <span style={{ fontSize: 15, fontWeight: 700, color: "#8C8177" }}>Transfer</span>
+                <span style={{ fontSize: 15, fontWeight: 700, color: "#8C8177" }}>
+                  {t.rec.transfer}
+                </span>
                 <span
                   style={{ display: "inline-flex", alignItems: "flex-end", gap: 2.5, height: 14 }}
                 >
@@ -169,7 +181,7 @@ export default function Recognition({
                 </span>
               </div>
               <div>
-                <div style={{ fontSize: 17, fontWeight: 700, color: "#6E6459" }}>To Mama Nkechi</div>
+                <div style={{ fontSize: 17, fontWeight: 700, color: "#6E6459" }}>{t.rec.to}</div>
                 <div
                   style={{
                     display: "flex",
@@ -268,7 +280,7 @@ export default function Recognition({
               "opacity 0.9s 0.15s cubic-bezier(0.22,1,0.36,1), transform 0.9s 0.15s cubic-bezier(0.22,1,0.36,1)",
           }}
         >
-          We know. We built Trafast for this.
+          {t.rec.we}
         </div>
       </div>
     </section>

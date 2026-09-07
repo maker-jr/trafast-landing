@@ -1,4 +1,5 @@
 import { HOW_INTRO_LINES } from "../landing.data";
+import { useT } from "../i18n/use-language";
 
 /**
  * "Wait! / How does that even work? / Glad you asked." — three headlines that
@@ -6,13 +7,15 @@ import { HOW_INTRO_LINES } from "../landing.data";
  * one stays up and leads into the walkthrough.
  */
 export default function HowIntro() {
+  const t = useT();
+
   return (
     <section style={{ background: "#FBF8F2", color: "#2A211B" }}>
       <div data-seqstory="" style={{ position: "relative", height: "340vh" }}>
         <div style={{ position: "sticky", top: 0, height: "100vh", overflow: "hidden" }}>
           {HOW_INTRO_LINES.map((line, i) => (
             <div
-              key={line.text}
+              key={line.key}
               data-seq={i}
               style={{
                 position: "absolute",
@@ -31,7 +34,7 @@ export default function HowIntro() {
                 willChange: "opacity, transform",
               }}
             >
-              {line.text}
+              {t.seq[line.key]}
             </div>
           ))}
         </div>

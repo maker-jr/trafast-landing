@@ -1,6 +1,7 @@
 import type { CSSProperties } from "react";
 import logo from "@/assets/images/logo-primary.png";
 import { STORY_ADVANTAGES, type Advantage } from "../landing.data";
+import { useT } from "../i18n/use-language";
 import FanArt from "./fan-art";
 import { fanCardStyle, fanHeading, fanWrap } from "./fan-card";
 
@@ -33,6 +34,8 @@ const TONES: Record<Advantage["tone"], CSSProperties> = {
  * use-landing-motion.ts for the choreography.
  */
 export default function Everyday() {
+  const t = useT();
+
   return (
     <section style={{ background: "#FBF8F2", color: "#2A211B" }}>
       <div data-story="" style={{ position: "relative", height: "480vh" }}>
@@ -76,7 +79,7 @@ export default function Everyday() {
                 maxWidth: 1100,
               }}
             >
-              Your bank app. Only better.
+              {t.every.head}
             </div>
             <div
               style={{
@@ -88,8 +91,7 @@ export default function Everyday() {
                 textWrap: "balance",
               }}
             >
-              Send, receive and pay bills like always. Then pay anyone in person,
-              instantly, with no network at all.
+              {t.every.sub}
             </div>
           </div>
 
@@ -107,7 +109,7 @@ export default function Everyday() {
                 CARD_PADDING
               )}
             >
-              <div style={fanHeading}>Send to any bank. Receive from anyone.</div>
+              <div style={fanHeading}>{t.every.f0}</div>
               <FanArt>
                 <div
                   style={{
@@ -263,7 +265,7 @@ export default function Everyday() {
                 CARD_PADDING
               )}
             >
-              <div style={fanHeading}>Bills, airtime, any QR. As usual.</div>
+              <div style={fanHeading}>{t.every.f1}</div>
               <FanArt>
                 <div
                   style={{
@@ -369,7 +371,7 @@ export default function Everyday() {
                 CARD_PADDING
               )}
             >
-              <div style={fanHeading}>Pay in person. Instant. Final. No network needed.</div>
+              <div style={fanHeading}>{t.every.f2}</div>
               <FanArt>
                 <span
                   style={{
@@ -469,7 +471,7 @@ export default function Everyday() {
               willChange: "opacity, transform",
             }}
           >
-            Here’s what better looks like.
+            {t.every.line}
           </div>
 
           <div
@@ -478,7 +480,7 @@ export default function Everyday() {
           >
             {STORY_ADVANTAGES.map((a, i) => (
               <div
-                key={a.text}
+                key={a.key}
                 data-adv={i}
                 data-rot={a.rotate}
                 data-maxw={a.maxWidth}
@@ -501,7 +503,7 @@ export default function Everyday() {
                   ...TONES[a.tone],
                 }}
               >
-                {a.text}
+                {t.every[a.key]}
               </div>
             ))}
           </div>

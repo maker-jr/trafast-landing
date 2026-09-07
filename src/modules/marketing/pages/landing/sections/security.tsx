@@ -1,5 +1,6 @@
 import type { CSSProperties, ReactNode } from "react";
 import logo from "@/assets/images/logo-primary.png";
+import { useT } from "../i18n/use-language";
 
 const revealHeading = (delay: string): CSSProperties => ({
   fontSize: "clamp(40px, 4vw, 64px)",
@@ -657,6 +658,8 @@ function VaultArt() {
 }
 
 export default function Security() {
+  const t = useT();
+
   return (
     <section id="security" style={{ background: "#FBF8F2", color: "#2A211B" }}>
       <div
@@ -754,7 +757,7 @@ export default function Security() {
             willChange: "transform, opacity",
           }}
         >
-          Safe. Every single time.
+          {t.safe.head}
         </div>
         <div
           data-reveal=""
@@ -771,7 +774,7 @@ export default function Security() {
               "opacity 0.9s 0.2s cubic-bezier(0.22,1,0.36,1), transform 0.9s 0.2s cubic-bezier(0.22,1,0.36,1)",
           }}
         >
-          Protected by you, your phone, and a licensed bank.
+          {t.safe.sub}
         </div>
       </div>
 
@@ -790,20 +793,20 @@ export default function Security() {
         <Point
           art={<TwoPhonesArt />}
           artOrder={2}
-          heading="Two phones. One receipt."
-          body="Every in-person payment is recorded on both phones at the same moment. No screenshots to trust, no alert to wait for. You both see the same thing."
+          heading={t.safe.h1}
+          body={t.safe.b1}
         />
         <Point
           art={<BiometricArt />}
           artOrder={1}
-          heading="Only you can say yes."
-          body="Every payment is locked to your face or fingerprint and protected by the strongest security built into your phone. No one else can authorise it. Not even us."
+          heading={t.safe.h2}
+          body={t.safe.b2}
         />
         <Point
           art={<VaultArt />}
           artOrder={2}
-          heading="Bank-grade. Insured. Always."
-          body="Every naira in Trafast is held and insured by a licensed financial institution, under the same protection Nigeria’s banks carry. Offline or online, it’s covered."
+          heading={t.safe.h3}
+          body={t.safe.b3}
         />
       </div>
     </section>

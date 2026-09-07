@@ -3,7 +3,7 @@ import type { MouseEvent } from "react";
 
 import "./landing.css";
 import {
-  AUDIENCE_COPY,
+  AUDIENCE_VISUALS,
   BEAT_PLAN,
   STEPS,
   STEP_DURATIONS,
@@ -25,6 +25,8 @@ import HowIntro from "./sections/how-intro";
 import Business, { BusinessIntro } from "./sections/business";
 import Faq from "./sections/faq";
 import SiteFooter from "./sections/site-footer";
+import BackToTop from "./sections/back-to-top";
+import { LanguageProvider, useT } from "./i18n/use-language";
 import type { PhoneVals } from "./sections/phone-mock";
 
 /** Flip to true once the apps are in the stores; swaps the waitlist for store links. */
@@ -83,12 +85,22 @@ function phoneVals(beat: number, phase: number): PhoneVals {
 }
 
 export default function LandingPage() {
+  return (
+    <LanguageProvider>
+      <Landing />
+    </LanguageProvider>
+  );
+}
+
+function Landing() {
   const [audience, setAudience] = useState<Audience>("personal");
   const [stepIndex, setStepIndex] = useState(0);
   const [stall, setStall] = useState(47);
   const [beat, setBeat] = useState(0);
   const [phase, setPhase] = useState(0);
   const [biz, setBiz] = useState(0);
+  const [progress, setProgress] = useState(0);
+  const [pastFirstScreen, setPastFirstScreen] = useState(false);
 
   const stepIndexRef = useRef(0);
   stepIndexRef.current = stepIndex;
@@ -140,13 +152,19 @@ export default function LandingPage() {
 
   useEffect(() => () => beatTimers.current.forEach(clearTimeout), []);
 
-  useLandingMotion(enterBeat);
+  const onProgress = useCallback((next: number, past: boolean) => {
+    setProgress(next);
+    setPastFirstScreen(past);
+  }, []);
+
+  useLandingMotion(enterBeat, onProgress);
   useSmoothWheel();
 
-  const copy = AUDIENCE_COPY[audience];
+  const t = useT();
+  const copy = t.hero[audience];
+  const visuals = AUDIENCE_VISUALS[audience];
   const step = STEPS[stepIndex];
   const phone = phoneVals(beat, phase);
-  const biznes = audience === "business";
 
   const onCta = (e: MouseEvent) => {
     if (LIVE) return;
@@ -176,7 +194,7 @@ export default function LandingPage() {
       >
         <SiteNav
           audience={audience}
-          navCta={LIVE ? copy.navCta : "Early access"}
+          navCta={LIVE ? copy.nav : t.nav.early}
           onPersonal={() => {
             setAudience("personal");
             setStepIndex(0);
@@ -192,18 +210,20 @@ export default function LandingPage() {
         />
         <Hero
           copy={copy}
+          initials={visuals.initials}
+          avatar={visuals.avatar}
           step={step}
-          primaryCta={LIVE ? copy.primaryCta : biznes ? "Join the waitlist" : "Get early access"}
-          qrTag={biznes ? "@yourshop" : "@mamankechi"}
+          primaryCta={LIVE ? copy.cta : copy.wait}
+          qrTag={visuals.qrTag}
           onCta={onCta}
         />
       </div>
 
       <Recognition
         stallTimer={`${Math.floor(stall / 60)}:${String(stall % 60).padStart(2, "0")}`}
-        stallLabel={stall >= 70 ? "Transaction failed" : "Processing…"}
+        stallLabel={stall >= 70 ? t.rec.failed : t.rec.processing}
         stallTone={stall >= 70 ? "#C8402F" : "#2A211B"}
-        stallBtnLabel={stall >= 70 ? "Try again" : "Please wait"}
+        stallBtnLabel={stall >= 70 ? t.rec.retry : t.rec.wait}
         stallBtnBg={stall >= 70 ? "#2A211B" : "#F0EADE"}
         stallBtnColor={stall >= 70 ? "#FBF8F2" : "#A79E93"}
       />
@@ -228,6 +248,8 @@ export default function LandingPage() {
         goSecurity={jump("security")}
         goFaq={jump("faq")}
       />
+
+      <BackToTop progress={progress} visible={pastFirstScreen} />
     </div>
   );
 }

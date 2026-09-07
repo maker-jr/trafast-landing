@@ -1,4 +1,4 @@
-import { BEAT_COPY } from "../landing.data";
+import { useT } from "../i18n/use-language";
 import PhoneMock, { type PhoneVals } from "./phone-mock";
 
 type Props = {
@@ -7,6 +7,8 @@ type Props = {
 };
 
 export default function HowItWorks({ beat, phone }: Props) {
+  const t = useT();
+
   return (
     <section id="how-it-works" style={{ background: "#FBF8F2", color: "#2A211B" }}>
       <div
@@ -35,7 +37,7 @@ export default function HowItWorks({ beat, phone }: Props) {
             willChange: "transform, opacity",
           }}
         >
-          Here’s how it works.
+          {t.how.head}
         </div>
         <div
           data-reveal=""
@@ -52,7 +54,7 @@ export default function HowItWorks({ beat, phone }: Props) {
               "opacity 0.9s 0.2s cubic-bezier(0.22,1,0.36,1), transform 0.9s 0.2s cubic-bezier(0.22,1,0.36,1)",
           }}
         >
-          Five steps. You only ever notice one of them.
+          {t.how.sub}
         </div>
       </div>
       <div
@@ -100,7 +102,7 @@ export default function HowItWorks({ beat, phone }: Props) {
         </div>
 
         <div style={{ display: "flex", flexDirection: "column", gap: 18, padding: "6vh 0 38vh" }}>
-          {BEAT_COPY.map(([head, sub], i) => {
+          {t.how.beats.map(([head, sub], i) => {
             const on = i === beat;
             return (
               <div
