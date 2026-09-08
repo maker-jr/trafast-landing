@@ -181,7 +181,7 @@ export const en: Dict = {
     soonSub: "We’re launching soon. Be first in line when Trafast goes live in Nigeria.",
     email: "Enter your email",
     first: "Be first when we launch.",
-    waitSub: "We’re building it in Lagos. You’ll know the day it’s ready.",
+    waitSub: "We’re building it in Abuja. You’ll know the day it’s ready.",
     nospam: "One email, the day we go live. Nothing else.",
     early: "Get early access",
     onList: "You’re on the list.",

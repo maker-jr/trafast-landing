@@ -130,7 +130,7 @@ export default function WaitlistSheet({ open, onClose }: Props) {
                   color: "#8C8177",
                 }}
               >
-                <span>Trafast · Lagos</span>
+                <span>Trafast · Abuja</span>
                 <span style={{ color: "#8A5233" }}>{t.close.soon}</span>
               </div>
               <div style={{ ...dashedRule, margin: "18px 0 0" }} />

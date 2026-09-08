@@ -186,7 +186,7 @@ export const ha: Dict = {
     soonSub: "Za mu ƙaddamar nan ba da jimawa ba. Kasance na farko idan Trafast ta fara aiki a Najeriya.",
     email: "Saka imel ɗinka",
     first: "Ka zama na farko idan mun fara.",
-    waitSub: "Muna gina shi a Lagos. Za ka sani ranar da ya shirya.",
+    waitSub: "Muna gina shi a Abuja. Za ka sani ranar da ya shirya.",
     nospam: "Imel guda, ranar da muka fara. Ba wani abu.",
     early: "Samu tun da wuri",
     onList: "Kana cikin jerin.",

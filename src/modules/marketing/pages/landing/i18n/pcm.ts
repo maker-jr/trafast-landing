@@ -181,7 +181,7 @@ export const pcm: Dict = {
     soonSub: "We dey launch soon. Be first in line when Trafast go live for Nigeria.",
     email: "Enter your email",
     first: "Be di first when we launch.",
-    waitSub: "We dey build am for Lagos. You go know di day e ready.",
+    waitSub: "We dey build am for Abuja. You go know di day e ready.",
     nospam: "One email, di day we go live. Nothing else.",
     early: "Get early access",
     onList: "You dey di list.",

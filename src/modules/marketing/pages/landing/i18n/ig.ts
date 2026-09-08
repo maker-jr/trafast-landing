@@ -186,7 +186,7 @@ export const ig: Dict = {
     soonSub: "Anyị ga-amalite n’oge na-adịghị anya. Bụrụ onye mbụ mgbe Trafast malitere na Naịjirịa.",
     email: "Tinye email gị",
     first: "Bụrụ onye mbụ mgbe anyị malitere.",
-    waitSub: "Anyị na-ewu ya na Lagos. Ị ga-amara ụbọchị ọ dị njikere.",
+    waitSub: "Anyị na-ewu ya na Abuja. Ị ga-amara ụbọchị ọ dị njikere.",
     nospam: "Otu email, ụbọchị anyị malitere. Ọ dịghị ihe ọzọ.",
     early: "Banye n’oge",
     onList: "Ị nọ na ndepụta.",

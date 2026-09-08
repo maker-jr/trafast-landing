@@ -568,7 +568,7 @@ export default function Business({
             {t.biz.add}
           </a>
           <a
-            href="mailto:hello@trafast.ng"
+            href="mailto:hello@trafast.co"
             className="tf-textlink"
             style={{
               fontSize: 18,

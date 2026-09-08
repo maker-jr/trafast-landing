@@ -186,7 +186,7 @@ export const yo: Dict = {
     soonSub: "A máa bẹ̀rẹ̀ láìpẹ́. Jẹ́ àkọ́kọ́ nígbà tí Trafast bá bẹ̀rẹ̀ ní Nàìjíríà.",
     email: "Tẹ ímeèlì rẹ sí",
     first: "Jẹ́ àkọ́kọ́ nígbà tí a bá bẹ̀rẹ̀.",
-    waitSub: "À ń kọ́ ọ ní Èkó. Wàá mọ̀ ọjọ́ tí ó bá ṣetán.",
+    waitSub: "À ń kọ́ ọ ní Abuja. Wàá mọ̀ ọjọ́ tí ó bá ṣetán.",
     nospam: "Ímeèlì kan, ọjọ́ tí a bá bẹ̀rẹ̀. Kò sí òmíràn.",
     early: "Wọlé ní kùtùkùtù",
     onList: "O wà lórí àkójọ.",
