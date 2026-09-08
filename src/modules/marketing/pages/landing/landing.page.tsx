@@ -28,6 +28,8 @@ import BackToTop from "./sections/back-to-top";
 import WaitlistSheet from "./sections/waitlist-sheet";
 import { WaitlistProvider } from "./waitlist";
 import { LanguageProvider, useT } from "./i18n/use-language";
+import { loadAnalytics, track } from "./analytics/analytics";
+import { useEngagementTime, useSectionTracking } from "./analytics/use-analytics";
 import type { PhoneVals } from "./sections/phone-mock";
 
 /** Flip to true once the apps are in the stores; swaps the waitlist for store links. */
@@ -161,6 +163,9 @@ function Landing() {
     setPastFirstScreen(past);
   }, []);
 
+  useEffect(loadAnalytics, []);
+  useSectionTracking();
+  useEngagementTime();
   useLandingMotion(enterBeat, onProgress);
   // The wheel must belong to the sheet's own scroll area while it is open.
   useSmoothWheel(!sheetOpen);
@@ -171,9 +176,10 @@ function Landing() {
   const step = STEPS[stepIndex];
   const phone = phoneVals(beat, phase);
 
-  const onCta = (e: MouseEvent) => {
+  const openSheet = (trigger: "nav" | "hero" | "business") => (e: MouseEvent) => {
     e.preventDefault();
     if (LIVE) return;
+    track("waitlist_opened", { trigger });
     setSheetOpen(true);
   };
 
@@ -201,17 +207,19 @@ function Landing() {
           audience={audience}
           navCta={LIVE ? copy.nav : t.nav.early}
           onPersonal={() => {
+            track("audience_switched", { to: "personal" });
             setAudience("personal");
             setStepIndex(0);
           }}
           onBusiness={() => {
+            track("audience_switched", { to: "business" });
             setAudience("business");
             setStepIndex(0);
             scrollToId("business");
           }}
           onHow={jump("how-it-works")}
           onSecurity={jump("security")}
-          onCta={onCta}
+          onCta={openSheet("nav")}
         />
         <Hero
           copy={copy}
@@ -220,7 +228,7 @@ function Landing() {
           step={step}
           primaryCta={LIVE ? copy.cta : copy.wait}
           qrTag={visuals.qrTag}
-          onCta={onCta}
+          onCta={openSheet("hero")}
         />
       </div>
 
@@ -239,7 +247,7 @@ function Landing() {
       <Security />
       <BusinessIntro />
       <Business
-        onCta={onCta}
+        onCta={openSheet("business")}
         bizTotal={(128500 + biz * 4500).toLocaleString("en-NG")}
         bizCount={String(41 + biz)}
         bizOfflineCount={String(17 + biz)}

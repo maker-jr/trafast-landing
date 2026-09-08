@@ -1,5 +1,6 @@
 import { useLayoutEffect, useState } from "react";
 import { useLanguage } from "../i18n/use-language";
+import { track } from "../analytics/analytics";
 
 type Width = { text: number; full: number };
 
@@ -150,7 +151,12 @@ export default function Faq() {
                 data-faqrow=""
                 onMouseEnter={() => setHover(i)}
                 onMouseLeave={() => setHover(-1)}
-                onClick={() => setOpen((cur) => (cur === i ? -1 : i))}
+                onClick={() => {
+                  // Outside the updater: React may call an updater twice, and
+                  // a side effect in there fires twice with it.
+                  if (open !== i) track("faq_opened", { index: i });
+                  setOpen((cur) => (cur === i ? -1 : i));
+                }}
                 style={{
                   display: "grid",
                   gridTemplateColumns: "minmax(0, 1fr) 72px",

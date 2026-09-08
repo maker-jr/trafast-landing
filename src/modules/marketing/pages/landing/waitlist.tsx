@@ -1,9 +1,13 @@
 import { createContext, useContext, useRef, useState } from "react";
+import { track } from "./analytics/analytics";
 import type { FormEvent, ReactNode } from "react";
 
 export type WaitlistStatus = "idle" | "pending" | "error" | "done";
 
-type Outcome = { ok: true } | { ok: false; message: string };
+type Outcome =
+  /** `stored` is false for submissions the server silently dropped, such as bots. */
+  | { ok: true; stored: boolean }
+  | { ok: false; message: string; reason: "network" | "validation" | "server" };
 
 const GENERIC_FAILURE = "We couldn’t save your email just now. Please try again.";
 
@@ -24,13 +28,24 @@ async function postWaitlist(input: {
       body: JSON.stringify(input),
     });
   } catch {
-    return { ok: false, message: "No connection. Check your network and try again." };
+    return {
+      ok: false,
+      message: "No connection. Check your network and try again.",
+      reason: "network",
+    };
   }
 
-  if (response.ok) return { ok: true };
+  const body = (await response.json().catch(() => null)) as
+    | { message?: string; stored?: boolean }
+    | null;
 
-  const body = (await response.json().catch(() => null)) as { message?: string } | null;
-  return { ok: false, message: body?.message ?? GENERIC_FAILURE };
+  if (response.ok) return { ok: true, stored: body?.stored === true };
+
+  return {
+    ok: false,
+    message: body?.message ?? GENERIC_FAILURE,
+    reason: response.status === 400 ? "validation" : "server",
+  };
 }
 
 function useWaitlistState() {
@@ -65,9 +80,12 @@ function useWaitlistState() {
 
     if (outcome.ok) {
       setStatus("done");
+      // Only a submission the server actually stored counts as a signup.
+      if (outcome.stored) track("waitlist_submitted");
     } else {
       setStatus("error");
       setError(outcome.message);
+      track("waitlist_failed", { reason: outcome.reason });
     }
   };
 

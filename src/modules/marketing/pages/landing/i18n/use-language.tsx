@@ -7,6 +7,7 @@ import {
   useState,
   type ReactNode,
 } from "react";
+import { track } from "../analytics/analytics";
 import {
   en,
   loadDict,
@@ -54,6 +55,7 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
   const setLang = useCallback((next: Lang) => {
     setLangState(next);
     storeLang(next);
+    track("language_changed", { to: next });
   }, []);
 
   const value = useMemo(() => ({ lang, t, setLang }), [lang, t, setLang]);

@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useT } from "../i18n/use-language";
 import { rewindToTop } from "../use-landing-motion";
+import { track } from "../analytics/analytics";
 
 /** Circumference of the r=15.5 progress ring, to the design's precision. */
 const RING = 97.4;
@@ -25,6 +26,7 @@ export default function BackToTop({ progress, visible }: Props) {
   return (
     <button
       onClick={() => {
+        track("back_to_top_used");
         setRewinding(true);
         rewindToTop(() => setRewinding(false));
       }}

@@ -97,12 +97,13 @@ export default async (req: Request, context: Context): Promise<Response> => {
   };
 
   // Honeypot and timing failures get a success response — telling a bot why it
-  // was rejected just helps it try again.
+  // was rejected just helps it try again. The flag below lets the page know not
+  // to count it as a signup, without telling the caller anything useful.
   if (typeof company === "string" && company.trim() !== "") {
-    return json({ ok: true }, 200);
+    return json({ ok: true, stored: false }, 200);
   }
   if (typeof elapsedMs === "number" && elapsedMs < MIN_FILL_MS) {
-    return json({ ok: true }, 200);
+    return json({ ok: true, stored: false }, 200);
   }
 
   const address = typeof email === "string" ? email.trim().toLowerCase() : "";
@@ -151,7 +152,7 @@ export default async (req: Request, context: Context): Promise<Response> => {
     return json({ message: GENERIC_FAILURE }, 502);
   }
 
-  return json({ ok: true }, 200);
+  return json({ ok: true, stored: true }, 200);
 };
 
 export const config: Config = { path: "/api/waitlist" };
