@@ -1,4 +1,5 @@
 import type { MouseEvent } from "react";
+import { Link } from "react-router-dom";
 import logo from "@/assets/images/logo-primary.png";
 import { useWaitlist } from "../waitlist";
 import { useT } from "../i18n/use-language";
@@ -415,8 +416,8 @@ export default function SiteFooter({
                 <a href="#faq" onClick={goFaq} className="tf-footlink" style={footLink}>
                   FAQ
                 </a>
-                <a href="mailto:hello@trafast.app" className="tf-footlink" style={footLink}>
-                  hello@trafast.app
+                <a href="mailto:hello@trafast.co" className="tf-footlink" style={footLink}>
+                  hello@trafast.co
                 </a>
               </div>
               <div style={{ display: "flex", flexDirection: "column", gap: 18 }}>
@@ -442,7 +443,8 @@ export default function SiteFooter({
             justifyContent: "space-between",
             gap: 24,
             flexWrap: "wrap",
-            padding: "28px 8px 0",
+            // Clears the fixed back-to-top button, which used to cover these links.
+            padding: "28px 8px 112px",
             fontSize: 16,
             fontWeight: 600,
             color: "#8C8177",
@@ -450,12 +452,12 @@ export default function SiteFooter({
         >
           <span>{t.close.copy}</span>
           <div style={{ display: "flex", alignItems: "center", gap: 24 }}>
-            <a href="#" className="tf-legal" style={{ color: "#8C8177" }}>
+            <Link to="/terms" className="tf-legal" style={{ color: "#8C8177" }}>
               {t.close.terms}
-            </a>
-            <a href="#" className="tf-legal" style={{ color: "#8C8177" }}>
+            </Link>
+            <Link to="/privacy" className="tf-legal" style={{ color: "#8C8177" }}>
               {t.close.privacy}
-            </a>
+            </Link>
           </div>
         </div>
       </div>

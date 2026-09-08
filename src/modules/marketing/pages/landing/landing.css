@@ -43,8 +43,23 @@
 .tf-landing a.tf-footlink:hover {
   color: #F5B32C;
 }
-.tf-landing a.tf-legal:hover {
+.tf-landing a.tf-legal:hover,
+.tf-landing .tf-legal:hover {
   color: #2A211B;
+}
+.tf-landing a.tf-toclink:hover {
+  color: #2A211B;
+}
+/* The legal pages set their own link colour, which the page-wide rule fights. */
+.tf-legal-page a:hover {
+  color: #8A5233;
+}
+.tf-legal-page a.tf-cta-amber:hover {
+  color: #2A211B;
+}
+.tf-legal-page a.tf-textlink:hover,
+.tf-legal-page .tf-textlink:hover {
+  color: #F5B32C;
 }
 .tf-landing button.tf-langbtn:hover {
   background: #E9E1D2;
@@ -194,4 +209,15 @@
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
   }
+}
+
+@media (max-width: 900px) {
+  /* minmax(0,…) not 1fr: a plain 1fr floors at min-content, and the limit
+     tiles were forcing the column wider than the screen. */
+  .tf-legal-page [data-m="grid"] { grid-template-columns: minmax(0, 1fr) !important; gap: 0 !important; }
+  .tf-legal-page [data-m="toc"] { position: static !important; display: none !important; }
+  .tf-legal-page [data-m="pad"] { padding-left: 24px !important; padding-right: 24px !important; }
+  .tf-legal-page [data-m="hero"] { padding: 48px 24px 40px !important; }
+  .tf-legal-page nav { padding: 16px 24px !important; }
+  .tf-legal-page [data-m="grid"] > div:last-child { padding-left: 24px !important; padding-right: 24px !important; }
 }
