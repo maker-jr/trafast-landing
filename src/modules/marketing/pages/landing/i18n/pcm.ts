@@ -117,8 +117,8 @@ export const pcm: Dict = {
     b1: "Every face-to-face payment dey recorded for both phones di same moment. No screenshot to trust, no alert to wait for. Both of you see di same thing.",
     h2: "Only you fit say yes.",
     b2: "Every payment dey locked to your face or fingerprint, protected by di strongest security inside your phone. Nobody else fit approve am. Even us.",
-    h3: "Bank-grade. Insured. Always.",
-    b3: "Every naira inside Trafast dey held and insured by licensed financial institution, under di same protection Nigeria banks carry. Offline or online, e dey covered.",
+    h3: "Your money, for bank.",
+    b3: "Trafast no dey hold your money. E dey sit for account wey carry your own name for licensed bank, just like any other Nigerian bank account wey you get.",
   },
   biz: {
     eyebrow: "Trafast for Business",
@@ -165,7 +165,7 @@ export const pcm: Dict = {
       ],
       [
         "My money safe?",
-        "Yes. Licensed financial institution dey hold and insure am, and every payment dey protected by di strongest security inside your phone.",
+        "Yes. Licensed bank dey hold am for account wey carry your own name, and every payment dey protected by di strongest security inside your phone.",
       ],
       [
         "Any charge?",
@@ -193,7 +193,7 @@ export const pcm: Dict = {
     follow: "Follow",
     terms: "Terms",
     privacy: "Privacy",
-    copy: "© Trafast 2026 · Licensed, insured partner institution dey hold di funds.",
+    copy: "© Trafast 2026 · Licensed partner bank dey hold di funds.",
   },
   top: { back: "Go back up", over: "Start again", rewind: "Going up" },
 };

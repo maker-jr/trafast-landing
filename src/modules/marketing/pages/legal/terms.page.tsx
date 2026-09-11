@@ -23,7 +23,7 @@ const SECTIONS: LegalSection[] = [
     id: "who",
     title: "Who we are",
     paras: [
-      "Trafast is operated by Trafast Technologies Ltd, registered in Abuja, Nigeria. We are a payment service, not a bank. Your balance is held and insured by our licensed partner institution, which means it is protected under the same rules that protect money in a Nigerian bank.",
+      "Trafast is operated by Trafast Technologies Ltd, registered in Abuja, Nigeria. We are a payment service, not a bank. We do not hold your money: your balance sits in an account in your own name at our licensed partner bank.",
       "Using the app means you accept these terms. If you do not accept them, do not use the app, and tell us why, because that is useful to us.",
     ],
   },

@@ -122,8 +122,8 @@ export const ig: Dict = {
     b1: "A na-edekọ ụgwọ ihu na ihu ọ bụla n’ekwentị abụọ n’otu oge. Enweghị screenshot ị ga-ekwenye, enweghị alert ị ga-echere. Unu abụọ na-ahụ otu ihe.",
     h2: "Naanị gị nwere ike ikwe.",
     b2: "A kpọchiri ụgwọ ọ bụla n’ihu gị ma ọ bụ mkpịsị aka gị, nchekwa kacha sie ike n’ekwentị gị na-echebe ya. Ọ dịghị onye ọzọ nwere ike ịkwado ya. Ọbụna anyị.",
-    h3: "Ọkwa ụlọ akụ. Mkpuchi. Mgbe niile.",
-    b3: "Naira ọ bụla na Trafast bụ ụlọ ọrụ ego nwere ikikere ji ya ma na-echebe ya, n’okpuru otu nchekwa ụlọ akụ Naịjirịa nwere. N’enweghị netwọk ma ọ bụ na netwọk, ọ nwere nchekwa.",
+    h3: "Ego gị, n’ụlọ akụ.",
+    b3: "Trafast anaghị ejide ego gị. Ọ dị n’akauntụ nwere aha gị n’ụlọ akụ nwere ikikere, dị ka akauntụ ụlọ akụ Naịjirịa ọ bụla ị nwere.",
   },
   biz: {
     eyebrow: "Trafast maka Azụmahịa",
@@ -198,7 +198,7 @@ export const ig: Dict = {
     follow: "Soro anyị",
     terms: "Usoro",
     privacy: "Nzuzo",
-    copy: "© Trafast 2026 · Ụlọ ọrụ mmekọ nwere ikikere na mkpuchi ji ego ahụ.",
+    copy: "© Trafast 2026 · Ụlọ akụ mmekọ nwere ikikere ji ego ahụ.",
   },
   top: { back: "Laghachi n’elu", over: "Malite ọzọ", rewind: "Na-alaghachi" },
 };

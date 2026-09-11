@@ -484,8 +484,8 @@ export default function LegalPage({
               color: "#8C8177",
             }}
           >
-            Trafast Technologies Ltd · Abuja, Nigeria. Funds held by a licensed, insured
-            partner institution.
+            Trafast Technologies Ltd · Abuja, Nigeria. Funds held at a licensed
+            partner bank.
           </div>
         </div>
       </div>

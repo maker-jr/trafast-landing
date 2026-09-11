@@ -122,8 +122,8 @@ export const yo: Dict = {
     b1: "Gbogbo owó ojúkojú ni a ń kọ sílẹ̀ lórí fóònù méjèèjì ní àsìkò kan náà. Kò sí screenshot láti gbàgbọ́, kò sí alert láti dúró de. Ẹ̀yin méjèèjì ń rí ohun kan náà.",
     h2: "Ìwọ nìkan ló lè sọ bẹ́ẹ̀ni.",
     b2: "Gbogbo owó ni a ti fi ojú rẹ tàbí ìka rẹ tì, tí ààbò tó lágbára jù nínú fóònù rẹ sì ń dáàbò bò. Kò sí ẹlòmíràn tí ó lè fọwọ́ sí i. Kódà àwa.",
-    h3: "Ìpele báńkì. Ìdánilójú. Nígbà gbogbo.",
-    b3: "Gbogbo náírà nínú Trafast ni ilé-iṣẹ́ ìnáwó tí ó ní ìwé-àṣẹ ń tọ́jú tí ó sì ń dánilójú, lábẹ́ ààbò kan náà tí àwọn báńkì Nàìjíríà ní. Láìsí nẹ́tíwọ́ọ̀kì tàbí pẹ̀lú rẹ̀, ó ní ààbò.",
+    h3: "Owó rẹ, nínú báńkì.",
+    b3: "Trafast kì í di owó rẹ mú. Ó wà nínú àkáǹtì tí ó ní orúkọ rẹ nínú báńkì tí ó ní ìwé-àṣẹ, bí àkáǹtì báńkì Nàìjíríà mìíràn tí o ní.",
   },
   biz: {
     eyebrow: "Trafast fún Iṣowo",
@@ -170,7 +170,7 @@ export const yo: Dict = {
       ],
       [
         "Ṣé owó mi ní ààbò?",
-        "Bẹ́ẹ̀ni. Ilé-iṣẹ́ ìnáwó tí ó ní ìwé-àṣẹ ni ó ń tọ́jú rẹ̀ tí ó sì ń dánilójú, ààbò tó lágbára jù nínú fóònù rẹ sì ń dáàbò bo gbogbo owó.",
+        "Bẹ́ẹ̀ni. Báńkì tí ó ní ìwé-àṣẹ ni ó ń tọ́jú rẹ̀ nínú àkáǹtì tí ó ní orúkọ rẹ, ààbò tó lágbára jù nínú fóònù rẹ sì ń dáàbò bo gbogbo owó.",
       ],
       [
         "Ṣé owó iṣẹ́ wà?",
@@ -198,7 +198,7 @@ export const yo: Dict = {
     follow: "Tẹ̀lé wa",
     terms: "Àwọn òfin",
     privacy: "Àṣírí",
-    copy: "© Trafast 2026 · Ilé-iṣẹ́ alábàáṣiṣẹ́pọ̀ tí ó ní ìwé-àṣẹ àti ìdánilójú ni ó ń tọ́jú owó.",
+    copy: "© Trafast 2026 · Báńkì alábàáṣiṣẹ́pọ̀ tí ó ní ìwé-àṣẹ ni ó ń tọ́jú owó.",
   },
   top: { back: "Padà sí òkè", over: "Bẹ̀rẹ̀ lẹ́ẹ̀kan sí i", rewind: "Ń padà" },
 };

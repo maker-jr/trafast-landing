@@ -122,8 +122,8 @@ export const ha: Dict = {
     b1: "Kowane biyan ido da ido ana rubuta shi a wayoyin biyu a lokaci guda. Babu screenshot da za a amince, babu alert da za a jira. Dukanku kuna ganin abu ɗaya.",
     h2: "Kai kaɗai za ka ce eh.",
     b2: "Kowane biya an kulle shi da fuskarka ko yatsanka, kuma tsaro mafi ƙarfi a wayarka ke kare shi. Babu wanda zai iya ba da izini. Har da mu.",
-    h3: "Matakin banki. Inshora. Koyaushe.",
-    b3: "Kowace naira a Trafast tana hannun cibiyar hada-hadar kuɗi mai lasisi da inshora, ƙarƙashin kariyar da bankunan Najeriya ke da ita. Da network ko ba tare da shi, tana da kariya.",
+    h3: "Kuɗin ka, a banki.",
+    b3: "Trafast ba ya riƙe kuɗin ka. Suna cikin asusu mai sunan ka a banki mai lasisi, kamar kowane asusun banki na Najeriya da kake da shi.",
   },
   biz: {
     eyebrow: "Trafast don Kasuwanci",
@@ -170,7 +170,7 @@ export const ha: Dict = {
       ],
       [
         "Kuɗina suna da tsaro?",
-        "Eh. Cibiyar hada-hadar kuɗi mai lasisi ce ke riƙe da inshorar su, kuma tsaro mafi ƙarfi a wayarka ke kare kowane biya.",
+        "Eh. Banki mai lasisi ke riƙe su a asusu mai sunan ka, kuma tsaro mafi ƙarfi a wayarka ke kare kowane biya.",
       ],
       [
         "Akwai kuɗin sabis?",
@@ -198,7 +198,7 @@ export const ha: Dict = {
     follow: "Bi mu",
     terms: "Sharuɗɗa",
     privacy: "Sirri",
-    copy: "© Trafast 2026 · Cibiyar abokiyar tarayya mai lasisi da inshora ke riƙe kuɗaɗen.",
+    copy: "© Trafast 2026 · Banki abokiyar tarayya mai lasisi ke riƙe kuɗaɗen.",
   },
   top: { back: "Koma sama", over: "Fara daga farko", rewind: "Ana komawa" },
 };

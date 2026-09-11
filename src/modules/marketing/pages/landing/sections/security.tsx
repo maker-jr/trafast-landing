@@ -618,7 +618,7 @@ function VaultArt() {
             <path d="M12 3 5 6v6c0 4.4 3 7.6 7 9 4-1.4 7-4.6 7-9V6l-7-3Z" />
             <path d="m9 12 2 2 4-4.5" />
           </svg>
-          Insured deposits
+          Held at a licensed bank
         </div>
       </div>
       <div

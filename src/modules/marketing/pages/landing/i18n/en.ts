@@ -117,8 +117,8 @@ export const en: Dict = {
     b1: "Every in-person payment is recorded on both phones at the same moment. No screenshots to trust, no alert to wait for. You both see the same thing.",
     h2: "Only you can say yes.",
     b2: "Every payment is locked to your face or fingerprint and protected by the strongest security built into your phone. No one else can authorise it. Not even us.",
-    h3: "Bank-grade. Insured. Always.",
-    b3: "Every naira in Trafast is held and insured by a licensed financial institution, under the same protection Nigeria’s banks carry. Offline or online, it’s covered.",
+    h3: "Your money, at a bank.",
+    b3: "Trafast never holds your money. It sits in an account in your own name at a licensed bank, just like any other Nigerian bank account you own.",
   },
   biz: {
     eyebrow: "Trafast for Business",
@@ -165,7 +165,7 @@ export const en: Dict = {
       ],
       [
         "Is my money safe?",
-        "Yes. It’s held and insured by a licensed financial institution, and every payment is protected by the strongest security built into your phone.",
+        "Yes. It’s held by a licensed bank in an account in your own name, and every payment is protected by the strongest security built into your phone.",
       ],
       [
         "Is there a fee?",
@@ -193,7 +193,7 @@ export const en: Dict = {
     follow: "Follow",
     terms: "Terms",
     privacy: "Privacy",
-    copy: "© Trafast 2026 · Funds held by a licensed, insured partner institution.",
+    copy: "© Trafast 2026 · Funds held at a licensed partner bank.",
   },
   top: { back: "Back to top", over: "Start over", rewind: "Rewinding" },
 };
